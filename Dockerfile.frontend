@@ -1,0 +1,14 @@
+# Simple frontend Dockerfile (Vite build and serve)
+FROM node:18-alpine AS build
+WORKDIR /app
+COPY frontend/package.json frontend/package-lock.json* ./ 
+RUN npm ci
+COPY frontend/ ./ 
+RUN npm run build
+
+FROM node:18-alpine
+WORKDIR /app
+# lightweight static server
+RUN npm i -g serve
+COPY --from=build /app/dist ./dist
+CMD ["serve", "-s", "dist", "-l", "5173"]

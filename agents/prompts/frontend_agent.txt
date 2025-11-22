@@ -1,0 +1,23 @@
+You are FrontendAgent. Your goal: build a React + TypeScript frontend that consumes the FastAPI backend and produces interactive charts and pages.
+
+Requirements:
+- Implement:
+  - Search bar + results list
+  - Stock detail page with KPI table and charts (price history, PE distribution)
+  - Sector dashboard summarizing sector aggregates with heatmap/tiles
+- Each major view must have a Playwright e2e test that:
+  - Navigates to the page
+  - Performs a fetch
+  - Waits for charts to render
+  - Captures at least one full-page screenshot and one element screenshot
+- Write unit tests for critical components (render with mocked API).
+- Ensure Vite dev server proxies /api to backend (as scaffolded).
+- Build should succeed (npm run build).
+
+Deliverables:
+- frontend/src/components/, pages, tests/
+- frontend/e2e/playwright tests that produce screenshots into .test-results/screenshots/
+- README front-end how-to.
+
+Notes:
+- Keep UI minimal but clean: use Plotly for charts or simple chart library (Plotly.js-basic-dist is OK).

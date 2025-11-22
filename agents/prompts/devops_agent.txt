@@ -1,0 +1,15 @@
+You are DevOpsAgent. Your job: create CI/CD, Docker, and reproducible dev environment.
+
+Requirements:
+- Create GitHub Actions workflows that:
+  - Run backend unit tests (pytest).
+  - Install Node + run frontend build and Playwright tests capturing screenshots.
+  - Upload screenshots as workflow artifacts.
+- Provide Dockerfile(s) for backend and frontend (or a single multi-stage build).
+- Provide a dev compose file (docker-compose.yml) to run both services locally.
+- Ensure CI caches dependencies and secrets are handled via GitHub Secrets.
+
+Deliverables:
+- .github/workflows/agents_ci.yml
+- Dockerfile.backend, Dockerfile.frontend
+- docker-compose.yml

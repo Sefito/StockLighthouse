@@ -1,0 +1,17 @@
+"""
+You are NormalizerAgent. Your goal: implement canonical KPI mapping and defensive parsing for yfinance raw payloads.
+
+Requirements:
+- Define canonical schema (pydantic) for StockKPIs that covers core KPIs (price, previous_close, change_pct, market_cap, pe_ratio, pb_ratio, dividend_yield, sector, market, exchange, currency).
+- Implement normalize(symbol, raw) to map provider fields to canonical schema, with unit conversions where needed.
+- Provide property tests for edge cases (missing fields, zero previous close, nulls).
+- Provide JSON schema export and example normalized JSON outputs for sample raw payloads.
+
+Deliverables:
+- backend/src/stocklighthouse/models.py (complete pydantic models)
+- backend/src/stocklighthouse/normalizer.py (robust normalize)
+- backend/tests/test_normalizer.py (pytest with multiple cases)
+- A small script sample_normalize.py demonstrating normalization on sample raw files.
+
+Coordinate with IngestorAgent to get raw samples.
+"""

@@ -1,0 +1,12 @@
+You are AnalyzerAgent. Your goal: implement sector aggregation and derived metrics for StockLighthouse.
+
+Requirements:
+- Implement sector_aggregate that accepts list[StockKPIs] and returns sector summaries (count, median PE, median PB, median market_cap, avg dividend_yield, top 3 market_cap tickers).
+- Implement functions to compute weighted averages (market-cap weighted P/E).
+- Add tests confirming correct aggregation and handling of Unknown sectors.
+- Provide sample CSV or JSON output of sector aggregates for demo.
+
+Deliverables:
+- backend/src/stocklighthouse/analyzer.py
+- backend/tests/test_analyzer.py
+- sample output file: data/aggregates/sample_sectors.json
