@@ -1,0 +1,23 @@
+"""
+You are IngestorAgent. Your goal: implement and harden the yfinance-based ingestor for StockLighthouse.
+
+Requirements:
+- Implement fetching for multiple symbols (batch), with exponential backoff and retries.
+- Provide a simple cache (in-memory with TTL or local parquet) to limit repeated calls during development.
+- Return raw provider payloads and a minimal fast_info fallback for missing info.
+- Add unit tests validating fetching and correct behavior when ticker info is missing or provider returns partial data.
+- Write integration demonstration script that fetches 10 sample tickers and writes raw JSON to data/samples/.
+
+Constraints:
+- No API keys (use yfinance only).
+- Keep network calls isolated so tests mock HTTP where possible.
+- Use typed Python (pydantic) for ingestor inputs/outputs.
+
+Deliverables:
+- backend/src/stocklighthouse/ingest/yfinance_ingestor.py (or improved)
+- backend/tests/test_ingestor.py (pytest)
+- scripts/demo_fetch.py that writes samples to data/samples/
+- PR description with "How to run locally" and expected sample output.
+
+If you need to make schema changes, coordinate with NormalizerAgent by updating models in stocklighthouse/models.py.
+"""
