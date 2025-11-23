@@ -115,7 +115,7 @@ ingestor.print_summary(metrics)
 
 **Features:**
 - Fetches quarterly financial statements (income, balance sheet, cash flow)
-- Extracts key metrics: revenue, net_income, eps, total_assets, total_debt, free_cash_flow, operating_margin
+- Extracts key metrics: revenue, net_income, total_assets, total_debt, free_cash_flow, operating_margin
 - Handles missing quarterly data gracefully
 - Saves normalized Parquet format with JSON metrics
 
