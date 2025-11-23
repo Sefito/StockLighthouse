@@ -14,7 +14,6 @@ Implements various technical indicators including:
 """
 import pandas as pd
 import numpy as np
-from typing import Optional
 
 
 def sma(series: pd.Series, period: int) -> pd.Series:
