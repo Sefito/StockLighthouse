@@ -216,7 +216,7 @@ class FundamentalsIngestor:
                         metrics['net_income'] = self._safe_get_value(
                             quarterly_financials, 'Net Income', date
                         )
-                        # EPS extraction - try direct field first, then calculate
+                        # EPS extraction - try Basic EPS, fallback to Diluted EPS
                         eps = self._safe_get_value(quarterly_financials, 'Basic EPS', date)
                         if eps is None:
                             eps = self._safe_get_value(quarterly_financials, 'Diluted EPS', date)

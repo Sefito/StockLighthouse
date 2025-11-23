@@ -274,6 +274,8 @@ class PriceIngestor:
         total_days = len(df)
         
         # Calculate expected trading days using pandas bdate_range for accuracy
+        # Note: Using datetime.now() as the reference end date for lookback validation
+        # This is appropriate for ingestion validation but may vary slightly in tests
         end_date = datetime.now()
         start_date = end_date - timedelta(days=expected_days)
         expected_trading_days = len(pd.bdate_range(start=start_date, end=end_date))
