@@ -37,9 +37,16 @@ env/
 .pytest_cache/
 .coverage
 htmlcov/
+.test-results/
+playwright-report/
 
 # Data files (samples from ingestor)
 data/samples/*.json
 
 # Logs
 *.log
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.test-results/

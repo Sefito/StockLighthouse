@@ -1,0 +1,48 @@
+.kpi-table {
+  background: white;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.kpi-table h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 20px;
+}
+
+.kpi-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.kpi-table tr {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.kpi-table tr:last-child {
+  border-bottom: none;
+}
+
+.kpi-label {
+  padding: 12px 0;
+  font-weight: 500;
+  color: #666;
+  width: 40%;
+}
+
+.kpi-value {
+  padding: 12px 0;
+  color: #333;
+  font-weight: 600;
+  text-align: right;
+}
+
+.kpi-value.positive {
+  color: #10b981;
+}
+
+.kpi-value.negative {
+  color: #ef4444;
+}
