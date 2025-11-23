@@ -90,35 +90,46 @@ def _create_sector_summary(sector: str, stocks: list[StockKPIs]) -> SectorSummar
     """
     Create a sector summary from a list of stocks.
     
+    Computes statistical aggregates including medians, averages, and top stocks.
+    Handles missing/None values gracefully by excluding them from calculations.
+    
     Args:
-        sector: Sector name
+        sector: Sector name (e.g., "Technology", "Healthcare")
         stocks: List of stocks in the sector
         
     Returns:
-        SectorSummary object
+        SectorSummary object with computed statistics
+        
+    Note:
+        - Medians are calculated only from non-None values
+        - Top tickers are sorted by market cap (descending)
+        - If fewer than 3 stocks have market cap, includes stocks without cap
     """
     count = len(stocks)
     
     # Collect non-None values for each metric
+    # Filter out None values to avoid skewing statistics
     pe_values = [s.pe_ratio for s in stocks if s.pe_ratio is not None]
     pb_values = [s.pb_ratio for s in stocks if s.pb_ratio is not None]
     market_cap_values = [s.market_cap for s in stocks if s.market_cap is not None]
     dividend_values = [s.dividend_yield for s in stocks if s.dividend_yield is not None]
     
-    # Compute medians
+    # Compute medians - robust to outliers unlike mean
     median_pe = median(pe_values) if pe_values else None
     median_pb = median(pb_values) if pb_values else None
     median_market_cap = median(market_cap_values) if market_cap_values else None
     
-    # Compute average dividend yield
+    # Compute average dividend yield - mean is appropriate for yields
     avg_dividend_yield = sum(dividend_values) / len(dividend_values) if dividend_values else None
     
     # Find top 3 tickers by market cap
+    # First, get stocks with defined market cap
     stocks_with_cap = [(s.symbol, s.market_cap) for s in stocks if s.market_cap is not None]
-    stocks_with_cap.sort(key=lambda x: x[1], reverse=True)
+    stocks_with_cap.sort(key=lambda x: x[1], reverse=True)  # Sort by market cap descending
     top_tickers = stocks_with_cap[:3]
     
     # Include stocks without market cap at the end if we have fewer than 3
+    # This ensures we always show up to 3 stocks even if some lack market cap data
     if len(top_tickers) < 3:
         stocks_without_cap = [(s.symbol, None) for s in stocks if s.market_cap is None]
         top_tickers.extend(stocks_without_cap[:3 - len(top_tickers)])

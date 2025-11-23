@@ -30,7 +30,19 @@ app.add_middleware(
 
 # Load stock data from JSON
 def load_stock_data() -> list[StockKPIs]:
-    """Load normalized stock KPIs from JSON file."""
+    """
+    Load normalized stock KPIs from JSON file.
+    
+    Reads the normalized_kpis.json file from the data/normalized directory
+    and deserializes it into a list of StockKPIs objects.
+    
+    Returns:
+        List of StockKPIs objects loaded from file, empty list if file doesn't exist
+        
+    Raises:
+        ValidationError: If JSON data doesn't match StockKPIs schema
+        JSONDecodeError: If file contains invalid JSON
+    """
     data_path = Path(__file__).parent.parent.parent.parent.parent / "data" / "normalized" / "normalized_kpis.json"
     if not data_path.exists():
         return []
@@ -43,7 +55,19 @@ def load_stock_data() -> list[StockKPIs]:
 _stock_cache: Optional[list[StockKPIs]] = None
 
 def get_stocks() -> list[StockKPIs]:
-    """Get cached stock data or load from file."""
+    """
+    Get cached stock data or load from file.
+    
+    Implements in-memory caching to avoid repeatedly reading the JSON file.
+    The cache is populated on first call and reused for subsequent calls.
+    
+    Returns:
+        List of StockKPIs objects, either from cache or freshly loaded
+        
+    Note:
+        To refresh the cache, restart the API server. Future versions may
+        implement cache invalidation or time-based refresh.
+    """
     global _stock_cache
     if _stock_cache is None:
         _stock_cache = load_stock_data()
@@ -52,28 +76,57 @@ def get_stocks() -> list[StockKPIs]:
 
 @app.get("/")
 def read_root():
-    """Health check endpoint."""
+    """
+    Health check endpoint.
+    
+    Returns basic status information to verify the API is running.
+    Can be used for monitoring, health checks, and load balancer probes.
+    
+    Returns:
+        Dict with status and message fields
+        
+    Example:
+        >>> curl http://localhost:8000/
+        {"status": "ok", "message": "StockLighthouse API"}
+    """
     return {"status": "ok", "message": "StockLighthouse API"}
 
 
 @app.get("/api/stocks/search")
 def search_stocks(q: str = ""):
     """
-    Search for stocks by symbol or name.
+    Search for stocks by symbol, sector, or industry.
+    
+    Performs case-insensitive partial matching across multiple fields.
+    Returns up to 50 results, or the first 20 stocks if no query provided.
     
     Args:
-        q: Search query (symbol or partial match)
+        q: Search query string (symbol, sector, or industry name)
         
     Returns:
-        List of matching stocks
+        List of StockKPIs objects matching the query
+        
+    Examples:
+        >>> # Search by symbol
+        >>> curl "http://localhost:8000/api/stocks/search?q=AAPL"
+        
+        >>> # Search by sector
+        >>> curl "http://localhost:8000/api/stocks/search?q=tech"
+        
+        >>> # Get default stocks (no query)
+        >>> curl "http://localhost:8000/api/stocks/search"
     """
     stocks = get_stocks()
     
     if not q:
-        # Return first 20 stocks if no query
+        # Return first 20 stocks if no query - useful for initial page load
         return stocks[:20]
     
+    # Normalize query to uppercase for case-insensitive matching
     query = q.upper()
+    
+    # Search across symbol, sector, and industry fields
+    # Using 'in' operator for partial matching (e.g., "TECH" matches "Technology")
     results = [
         stock for stock in stocks
         if query in stock.symbol.upper() or 
@@ -81,7 +134,7 @@ def search_stocks(q: str = ""):
            (stock.industry and query in stock.industry.upper())
     ]
     
-    return results[:50]  # Limit to 50 results
+    return results[:50]  # Limit to 50 results to avoid overwhelming the client
 
 
 @app.get("/api/stocks/{symbol}")

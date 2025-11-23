@@ -20,18 +20,33 @@ def _safe_float(value: Any) -> Optional[float]:
     """
     Safely convert a value to float, returning None on failure.
     
+    Handles various edge cases including None, NaN, infinity, and invalid types.
+    This defensive approach ensures that malformed data doesn't crash the system.
+    
     Args:
         value: Value to convert (can be None, string, int, float, etc.)
         
     Returns:
-        Float value or None if conversion fails or value is None
+        Float value or None if conversion fails or value is None/NaN/infinity
+        
+    Examples:
+        >>> _safe_float(42)
+        42.0
+        >>> _safe_float("123.45")
+        123.45
+        >>> _safe_float(None)
+        None
+        >>> _safe_float(float('nan'))
+        None
+        >>> _safe_float(float('inf'))
+        None
     """
     if value is None:
         return None
     
     try:
         result = float(value)
-        # Check for NaN and infinity
+        # Check for NaN and infinity - both are invalid for our use case
         if math.isnan(result):
             return None
         if math.isinf(result):
@@ -45,17 +60,30 @@ def _safe_string(value: Any) -> Optional[str]:
     """
     Safely convert a value to string, returning None on failure.
     
+    Strips whitespace and returns None for empty strings to ensure data quality.
+    
     Args:
         value: Value to convert
         
     Returns:
         String value or None if conversion fails or value is None/empty
+        
+    Examples:
+        >>> _safe_string("AAPL")
+        'AAPL'
+        >>> _safe_string("  Tech  ")
+        'Tech'
+        >>> _safe_string("")
+        None
+        >>> _safe_string(None)
+        None
     """
     if value is None:
         return None
     
     try:
         result = str(value).strip()
+        # Return None for empty strings to maintain data quality
         return result if result else None
     except (ValueError, TypeError):
         return None
@@ -65,37 +93,50 @@ def _infer_market(exchange: Optional[str]) -> Optional[str]:
     """
     Infer market region from exchange code.
     
+    Maps common stock exchange codes to their geographic market regions.
+    This helps categorize stocks by their primary trading location.
+    
     Args:
         exchange: Exchange code (e.g., "NMS", "NYSE", "LSE")
         
     Returns:
-        Market region identifier (e.g., "us_market", "uk_market")
+        Market region identifier (e.g., "us_market", "uk_market") or None for unknown
+        
+    Examples:
+        >>> _infer_market("NYSE")
+        'us_market'
+        >>> _infer_market("LSE")
+        'uk_market'
+        >>> _infer_market("TYO")
+        'asian_market'
+        >>> _infer_market("UNKNOWN")
+        None
     """
     if not exchange:
         return None
     
     exchange_upper = exchange.upper()
     
-    # US exchanges
+    # US exchanges - NASDAQ, NYSE, AMEX, etc.
     us_exchanges = {"NMS", "NYSE", "NYQ", "NASDAQ", "AMEX", "BATS"}
     if exchange_upper in us_exchanges:
         return "us_market"
     
-    # UK exchanges
+    # UK exchanges - London Stock Exchange
     if exchange_upper in {"LSE", "LON"}:
         return "uk_market"
     
-    # European exchanges
+    # European exchanges - Frankfurt, Paris, Amsterdam, Swiss
     eu_exchanges = {"FRA", "PAR", "AMS", "SWX", "ETR"}
     if exchange_upper in eu_exchanges:
         return "eu_market"
     
-    # Asian exchanges
+    # Asian exchanges - Tokyo, Hong Kong, Shanghai, Shenzhen, Korea
     asian_exchanges = {"TYO", "HKG", "SHH", "SHZ", "KRX"}
     if exchange_upper in asian_exchanges:
         return "asian_market"
     
-    # Default: return None for unknown exchanges
+    # Default: return None for unknown/unlisted exchanges
     return None
 
 
@@ -162,12 +203,13 @@ def normalize(symbol: str, raw_data: Dict[str, Any]) -> StockKPIs:
     
     # Extract dividend yield - ensure it's a decimal fraction
     # yfinance returns dividend yield as a percentage value (e.g., 0.38 means 0.38%)
-    # We need to convert it to decimal (0.0038)
+    # We need to convert it to decimal (0.0038 for API consistency)
+    # Note: Some providers may return values already in decimal form
     dividend_yield = _safe_float(raw_data.get("dividendYield"))
     if dividend_yield is not None:
-        # yfinance typically returns values like 0.38 for 0.38%, so divide by 100
-        # However, some values might already be in decimal form (< 0.01)
-        # Use a heuristic: if > DIVIDEND_YIELD_PERCENTAGE_THRESHOLD, assume it's a percentage
+        # Use heuristic to determine if value is percentage or decimal:
+        # If value > DIVIDEND_YIELD_PERCENTAGE_THRESHOLD (0.01), assume percentage
+        # This handles edge cases where yield might already be in decimal form
         if dividend_yield > DIVIDEND_YIELD_PERCENTAGE_THRESHOLD:
             dividend_yield = dividend_yield / 100.0
     
