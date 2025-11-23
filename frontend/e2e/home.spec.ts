@@ -17,17 +17,15 @@ test.describe('Home Page', () => {
     const searchInput = page.locator('[data-testid="search-input"]');
     await expect(searchInput).toBeVisible();
     
-    // Take full page screenshot
-    await page.screenshot({ 
-      path: '.test-results/screenshots/home-page-full.png',
-      fullPage: true 
+    // Visual regression: full page
+    await expect(page).toHaveScreenshot('home-page-full.png', {
+      fullPage: true,
+      animations: 'disabled',
     });
     
-    // Take element screenshot of hero section
+    // Visual regression: hero section
     const hero = page.locator('.hero');
-    await hero.screenshot({ 
-      path: '.test-results/screenshots/home-page-hero.png' 
-    });
+    await expect(hero).toHaveScreenshot('home-page-hero.png');
   });
 
   test('should display popular stocks list', async ({ page }) => {
@@ -40,10 +38,10 @@ test.describe('Home Page', () => {
     const stockCards = page.locator('.stock-card');
     await expect(stockCards.first()).toBeVisible();
     
-    // Take screenshot of stock list
+    // Visual regression: stock list
     const stockList = page.locator('[data-testid="stock-list"]');
-    await stockList.screenshot({ 
-      path: '.test-results/screenshots/home-page-stock-list.png' 
+    await expect(stockList).toHaveScreenshot('home-page-stock-list.png', {
+      animations: 'disabled',
     });
   });
 

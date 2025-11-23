@@ -17,15 +17,15 @@ test.describe('Stock Detail Page', () => {
     const kpiTable = page.locator('[data-testid="kpi-table"]');
     await expect(kpiTable).toBeVisible();
     
-    // Take full page screenshot
-    await page.screenshot({ 
-      path: '.test-results/screenshots/stock-detail-full.png',
-      fullPage: true 
+    // Visual regression: full page
+    await expect(page).toHaveScreenshot('stock-detail-full.png', {
+      fullPage: true,
+      animations: 'disabled',
     });
     
-    // Take screenshot of KPI table
-    await kpiTable.screenshot({ 
-      path: '.test-results/screenshots/stock-detail-kpi.png' 
+    // Visual regression: KPI table
+    await expect(kpiTable).toHaveScreenshot('stock-detail-kpi.png', {
+      animations: 'disabled',
     });
   });
 
@@ -42,9 +42,9 @@ test.describe('Stock Detail Page', () => {
     // Wait for plotly chart to render
     await page.waitForSelector('.js-plotly-plot', { timeout: 10000 });
     
-    // Take screenshot of chart
-    await priceChart.screenshot({ 
-      path: '.test-results/screenshots/stock-detail-price-chart.png' 
+    // Visual regression: price chart
+    await expect(priceChart).toHaveScreenshot('stock-detail-price-chart.png', {
+      animations: 'disabled',
     });
   });
 
@@ -61,9 +61,9 @@ test.describe('Stock Detail Page', () => {
     // Wait for plotly chart to render
     await page.waitForSelector('.js-plotly-plot', { timeout: 10000 });
     
-    // Take screenshot of chart
-    await peChart.screenshot({ 
-      path: '.test-results/screenshots/stock-detail-pe-chart.png' 
+    // Visual regression: PE chart
+    await expect(peChart).toHaveScreenshot('stock-detail-pe-chart.png', {
+      animations: 'disabled',
     });
   });
 

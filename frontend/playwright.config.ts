@@ -11,6 +11,15 @@ export default defineConfig({
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'on-first-retry',
+    // Enable screenshot comparison
+    screenshot: 'only-on-failure',
+  },
+  // Visual regression testing configuration
+  expect: {
+    toHaveScreenshot: {
+      maxDiffPixels: 100,
+      threshold: 0.2,
+    },
   },
   projects: [
     {

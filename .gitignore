@@ -39,6 +39,11 @@ env/
 htmlcov/
 .test-results/
 playwright-report/
+test-results/
+
+# Visual regression test artifacts (exclude diffs, keep baselines)
+tests/diff/
+tests/current/
 
 # Data files (samples from ingestor)
 data/samples/*.json
@@ -50,3 +55,7 @@ data/samples/*.json
 frontend/node_modules/
 frontend/dist/
 frontend/.test-results/
+
+# Root node_modules for test utilities
+node_modules/
+package-lock.json
