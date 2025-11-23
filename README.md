@@ -613,6 +613,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 
 ### Component Documentation
 
+- [Architecture Overview](ARCHITECTURE.md) - System design and data flow
 - [YFinance Ingestor](backend/INGESTOR_README.md) - Data fetching API
 - [Normalizer](NORMALIZER_README.md) - Data normalization
 - [Analyzer](backend/ANALYZER_README.md) - Sector analysis
