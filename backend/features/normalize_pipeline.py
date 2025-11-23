@@ -13,9 +13,13 @@ from pathlib import Path
 from typing import Optional, Dict, Any
 import logging
 
+# Handle imports for both standalone use and when called from scripts directory
+# When running from scripts/, the import needs to be 'features.indicators'
+# When running tests from root, it can be 'backend.features.indicators'
 try:
     from backend.features.indicators import compute_all_indicators
 except ImportError:
+    # Fallback for when running from scripts/ directory
     from features.indicators import compute_all_indicators
 
 logger = logging.getLogger(__name__)
