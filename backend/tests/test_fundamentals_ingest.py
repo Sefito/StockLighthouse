@@ -330,7 +330,7 @@ class TestFundamentalsIngestor:
         mock_ticker.quarterly_cashflow = sample_quarterly_cashflow
         mock_ticker_class.return_value = mock_ticker
         
-        result = ingestor._fetch_fundamentals_with_retry('AAPL')
+        _ = ingestor._fetch_fundamentals_with_retry('AAPL')
         
         # Should eventually succeed after retry
         assert mock_sleep.call_count >= 1

@@ -144,6 +144,10 @@ class PriceIngestor:
     
     def _setup_file_logging(self) -> None:
         """Setup file handlers for validation and failure logs."""
+        # Remove existing FileHandler instances to avoid duplicates
+        logger.handlers = [h for h in logger.handlers 
+                          if not isinstance(h, logging.FileHandler)]
+        
         # Validation log handler
         validation_handler = logging.FileHandler(self.validation_log_path, mode='a')
         validation_handler.setLevel(logging.INFO)
@@ -269,9 +273,10 @@ class PriceIngestor:
         """
         total_days = len(df)
         
-        # Calculate expected trading days (approximately 252 trading days per year)
-        # For lookback_days, approximately 70% are trading days
-        expected_trading_days = int(expected_days * 0.70)
+        # Calculate expected trading days using pandas bdate_range for accuracy
+        end_date = datetime.now()
+        start_date = end_date - timedelta(days=expected_days)
+        expected_trading_days = len(pd.bdate_range(start=start_date, end=end_date))
         
         # Calculate completeness
         completeness_pct = (total_days / expected_trading_days) * 100 if expected_trading_days > 0 else 0
@@ -362,7 +367,9 @@ class PriceIngestor:
             
             # Reset index to make Date a column
             df_copy = df_copy.reset_index()
-            df_copy = df_copy.rename(columns={'index': 'Date'})
+            # Handle index naming - ensure the date column is named 'Date'
+            if 'index' in df_copy.columns:
+                df_copy = df_copy.rename(columns={'index': 'Date'})
             
             combined_data.append(df_copy)
         

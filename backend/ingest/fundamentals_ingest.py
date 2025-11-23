@@ -123,6 +123,10 @@ class FundamentalsIngestor:
     
     def _setup_file_logging(self) -> None:
         """Setup file handler for failure logs."""
+        # Remove existing FileHandler instances to avoid duplicates
+        logger.handlers = [h for h in logger.handlers 
+                          if not isinstance(h, logging.FileHandler)]
+        
         failure_handler = logging.FileHandler(self.failures_log_path, mode='a')
         failure_handler.setLevel(logging.ERROR)
         failure_handler.setFormatter(logging.Formatter(
@@ -212,6 +216,12 @@ class FundamentalsIngestor:
                         metrics['net_income'] = self._safe_get_value(
                             quarterly_financials, 'Net Income', date
                         )
+                        # EPS extraction - try direct field first, then calculate
+                        eps = self._safe_get_value(quarterly_financials, 'Basic EPS', date)
+                        if eps is None:
+                            eps = self._safe_get_value(quarterly_financials, 'Diluted EPS', date)
+                        metrics['eps'] = eps
+                        
                         # Operating margin calculation
                         revenue = self._safe_get_value(quarterly_financials, 'Total Revenue', date)
                         operating_income = self._safe_get_value(quarterly_financials, 'Operating Income', date)
@@ -252,7 +262,7 @@ class FundamentalsIngestor:
                     })
             
             except Exception as e:
-                logger.warning(f"{ticker} - Error processing date {date}: {e}")
+                logger.exception(f"{ticker} - Error processing date {date}: {e}")
                 continue
         
         return quarters_data

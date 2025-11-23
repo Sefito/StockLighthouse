@@ -30,7 +30,6 @@ Dependencies include:
 - `yfinance` - Yahoo Finance data provider
 - `pandas` - Data manipulation
 - `pyarrow` - Parquet file support
-- `pydantic` - Data validation
 
 ## Quick Start
 
@@ -115,7 +114,7 @@ ingestor.print_summary(metrics)
 
 **Features:**
 - Fetches quarterly financial statements (income, balance sheet, cash flow)
-- Extracts key metrics: revenue, net_income, total_assets, total_debt, free_cash_flow, operating_margin
+- Extracts 7 key metrics: revenue, net_income, eps, total_assets, total_debt, free_cash_flow, operating_margin
 - Handles missing quarterly data gracefully
 - Saves normalized Parquet format with JSON metrics
 
