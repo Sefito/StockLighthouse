@@ -1,0 +1,26 @@
+ticker,sector,industry
+AAPL,Technology,Consumer Electronics
+MSFT,Technology,Software
+GOOGL,Technology,Internet Content & Information
+AMZN,Consumer Cyclical,Internet Retail
+TSLA,Consumer Cyclical,Auto Manufacturers
+NVDA,Technology,Semiconductors
+META,Technology,Internet Content & Information
+JPM,Financial Services,Banks
+JNJ,Healthcare,Drug Manufacturers
+UNH,Healthcare,Healthcare Plans
+V,Financial Services,Credit Services
+WMT,Consumer Defensive,Discount Stores
+XOM,Energy,Oil & Gas Integrated
+PG,Consumer Defensive,Household & Personal Products
+MA,Financial Services,Credit Services
+HD,Consumer Cyclical,Home Improvement Retail
+BAC,Financial Services,Banks
+ABBV,Healthcare,Drug Manufacturers
+PFE,Healthcare,Drug Manufacturers
+KO,Consumer Defensive,Beverages
+COST,Consumer Defensive,Discount Stores
+MRK,Healthcare,Drug Manufacturers
+CVX,Energy,Oil & Gas Integrated
+PEP,Consumer Defensive,Beverages
+LLY,Healthcare,Drug Manufacturers
