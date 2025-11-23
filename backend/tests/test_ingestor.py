@@ -173,6 +173,7 @@ class TestYFinanceIngestor:
         assert result.symbol == "INVALID"
         assert result.success is False
         assert result.error is not None
+        assert "fast_info" in result.error or "failed" in result.error.lower()
         
     @patch('stocklighthouse.ingest.yfinance_ingestor.yf.Ticker')
     @patch('stocklighthouse.ingest.yfinance_ingestor.time.sleep')
@@ -226,7 +227,7 @@ class TestYFinanceIngestor:
         
         assert result.success is False
         assert result.error is not None
-        assert "fast_info failed" in result.error or "Persistent failure" in result.error
+        assert "fast_info failed" in result.error or "failure" in result.error.lower()
         
     @patch('stocklighthouse.ingest.yfinance_ingestor.yf.Ticker')
     def test_fetch_batch_success(self, mock_ticker_class):

@@ -126,7 +126,8 @@ class YFinanceIngestor:
                 # Try to get full info first
                 try:
                     info = ticker.info
-                    if info and len(info) > 0:
+                    # Check if info is a valid dictionary with data
+                    if info and isinstance(info, dict) and len(info) > 0:
                         # Successful fetch with full info
                         raw_data = {
                             "symbol": symbol,
@@ -209,14 +210,14 @@ class YFinanceIngestor:
         failed_count = 0
         
         for symbol in request.symbols:
-            symbol = symbol.upper().strip()
+            normalized_symbol = symbol.upper().strip()
             
             # Check cache if enabled
             if request.use_cache:
-                cached_data = self._get_from_cache(symbol)
+                cached_data = self._get_from_cache(normalized_symbol)
                 if cached_data:
                     tickers.append(TickerData(
-                        symbol=symbol,
+                        symbol=normalized_symbol,
                         success=True,
                         raw_data=cached_data,
                         fast_info=None
@@ -225,14 +226,14 @@ class YFinanceIngestor:
                     continue
             
             # Fetch from API
-            ticker_data = self._fetch_ticker_with_retry(symbol)
+            ticker_data = self._fetch_ticker_with_retry(normalized_symbol)
             tickers.append(ticker_data)
             
             if ticker_data.success:
                 fetched_count += 1
                 # Cache the successful result
                 if request.use_cache and ticker_data.raw_data:
-                    self._store_in_cache(symbol, ticker_data.raw_data)
+                    self._store_in_cache(normalized_symbol, ticker_data.raw_data)
             else:
                 failed_count += 1
                 

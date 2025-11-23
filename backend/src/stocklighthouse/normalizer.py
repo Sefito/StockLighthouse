@@ -17,8 +17,10 @@ def normalize(symbol: str, raw_data: Dict[str, Any]) -> StockKPIs:
     Returns:
         StockKPIs with normalized data
     """
-    # Extract price
-    price = raw_data.get("regularMarketPrice") or raw_data.get("currentPrice")
+    # Extract price - explicit None checks for robustness
+    price = raw_data.get("regularMarketPrice")
+    if price is None:
+        price = raw_data.get("currentPrice")
     
     # Calculate change percentage
     change_pct: Optional[float] = None
