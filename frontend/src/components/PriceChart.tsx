@@ -48,6 +48,7 @@ export function PriceChart({ symbol }: PriceChartProps) {
   return (
     <div className="price-chart" data-testid="price-chart">
       <h3>Price History (30 Days)</h3>
+      {/* eslint-disable @typescript-eslint/no-explicit-any */}
       <Plot
         data={[
           {
@@ -81,6 +82,7 @@ export function PriceChart({ symbol }: PriceChartProps) {
         }}
         style={{ width: '100%', height: '400px' }}
       />
+      {/* eslint-enable @typescript-eslint/no-explicit-any */}
     </div>
   );
 }

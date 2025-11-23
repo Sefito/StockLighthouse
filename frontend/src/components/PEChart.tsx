@@ -53,6 +53,7 @@ export function PEChart({ symbol }: PEChartProps) {
   return (
     <div className="pe-chart" data-testid="pe-chart">
       <h3>P/E Ratio Distribution in {data.sector || 'Sector'}</h3>
+      {/* eslint-disable @typescript-eslint/no-explicit-any */}
       <Plot
         data={[
           {
@@ -85,6 +86,7 @@ export function PEChart({ symbol }: PEChartProps) {
         }}
         style={{ width: '100%', height: '400px' }}
       />
+      {/* eslint-enable @typescript-eslint/no-explicit-any */}
     </div>
   );
 }
