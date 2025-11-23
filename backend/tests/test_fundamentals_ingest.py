@@ -346,7 +346,7 @@ class TestFundamentalsIngestor:
         """Test fetch with permanent failure after all retries."""
         # Mock yfinance Ticker to always fail
         mock_ticker = MagicMock()
-        mock_ticker.quarterly_financials = property(lambda self: (_ for _ in ()).throw(Exception("Error")))
+        mock_ticker.quarterly_financials = MagicMock(side_effect=Exception("Error"))
         mock_ticker_class.return_value = mock_ticker
         
         result = ingestor._fetch_fundamentals_with_retry('INVALID')
@@ -500,7 +500,8 @@ class TestExponentialBackoff:
         """Test that backoff increases exponentially."""
         # Mock yfinance to always fail
         mock_ticker = MagicMock()
-        mock_ticker.quarterly_financials = property(lambda self: (_ for _ in ()).throw(Exception("Error")))
+        mock_ticker.quarterly_financials = MagicMock(side_effect=Exception("Error"))
+        mock_ticker_class.return_value = mock_ticker
         mock_ticker_class.return_value = mock_ticker
         
         ingestor._fetch_fundamentals_with_retry('AAPL')

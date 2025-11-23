@@ -274,7 +274,7 @@ class TestPriceIngestor:
         # Create data with a large gap
         dates1 = pd.date_range(start='2023-01-01', periods=100, freq='B')
         dates2 = pd.date_range(start='2023-08-01', periods=100, freq='B')
-        dates = dates1.append(dates2)
+        dates = pd.Index(dates1).union(pd.Index(dates2))
         
         data = {
             'Open': [100 + i * 0.5 for i in range(200)],
