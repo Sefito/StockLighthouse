@@ -11,18 +11,31 @@ This script:
 
 Usage:
     python sample_normalize.py
+    
+Note: Run from the repository root directory.
 """
 import json
 import sys
 from pathlib import Path
 from typing import List, Dict, Any
 
-# Add backend/src to path for imports
-backend_src = Path(__file__).parent / "backend" / "src"
-sys.path.insert(0, str(backend_src))
-
-from stocklighthouse.normalizer import normalize
-from stocklighthouse.models import StockKPIs
+# Ensure backend/src is in the path for imports
+# This allows the script to be run from the repository root
+try:
+    from stocklighthouse.normalizer import normalize
+    from stocklighthouse.models import StockKPIs
+except ImportError:
+    # If imports fail, add backend/src to path as fallback
+    backend_src = Path(__file__).parent / "backend" / "src"
+    if backend_src.exists():
+        sys.path.insert(0, str(backend_src))
+        from stocklighthouse.normalizer import normalize
+        from stocklighthouse.models import StockKPIs
+    else:
+        print("Error: Could not import stocklighthouse modules.")
+        print("Please ensure you're running this script from the repository root directory.")
+        print("Or install the package: pip install -e backend/")
+        sys.exit(1)
 
 
 def load_raw_data(samples_dir: Path) -> List[Dict[str, Any]]:

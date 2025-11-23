@@ -5,11 +5,15 @@ This module provides defensive parsing and unit conversions for yfinance data,
 handling edge cases like missing fields, zero values, and null data gracefully.
 """
 from typing import Dict, Any, Optional
+import math
 import logging
 
 from stocklighthouse.models import StockKPIs
 
 logger = logging.getLogger(__name__)
+
+# Constants for data normalization
+DIVIDEND_YIELD_PERCENTAGE_THRESHOLD = 0.01  # Values above this are assumed to be percentages
 
 
 def _safe_float(value: Any) -> Optional[float]:
@@ -28,9 +32,9 @@ def _safe_float(value: Any) -> Optional[float]:
     try:
         result = float(value)
         # Check for NaN and infinity
-        if not (result == result):  # NaN check (NaN != NaN)
+        if math.isnan(result):
             return None
-        if result == float('inf') or result == float('-inf'):
+        if math.isinf(result):
             return None
         return result
     except (ValueError, TypeError):
@@ -163,8 +167,8 @@ def normalize(symbol: str, raw_data: Dict[str, Any]) -> StockKPIs:
     if dividend_yield is not None:
         # yfinance typically returns values like 0.38 for 0.38%, so divide by 100
         # However, some values might already be in decimal form (< 0.01)
-        # Use a heuristic: if > 0.01, assume it's a percentage that needs conversion
-        if dividend_yield > 0.01:
+        # Use a heuristic: if > DIVIDEND_YIELD_PERCENTAGE_THRESHOLD, assume it's a percentage
+        if dividend_yield > DIVIDEND_YIELD_PERCENTAGE_THRESHOLD:
             dividend_yield = dividend_yield / 100.0
     
     # Extract string fields with defensive parsing
