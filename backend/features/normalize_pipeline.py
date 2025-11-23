@@ -68,7 +68,7 @@ def adjust_for_dividends(df: pd.DataFrame, dividend_amount: float) -> pd.DataFra
     price_columns = ['open', 'high', 'low', 'close']
     for col in price_columns:
         if col in result.columns:
-            result[col] = result[col] - dividend_amount
+            result[col] = (result[col] - dividend_amount).clip(lower=0.0)
     
     return result
 
