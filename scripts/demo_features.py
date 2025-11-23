@@ -24,8 +24,7 @@ sys.path.insert(0, str(backend_path))
 from features.indicators import compute_all_indicators
 from features.normalize_pipeline import (
     process_multi_ticker_data,
-    check_feature_coverage,
-    normalize_and_generate_features
+    check_feature_coverage
 )
 
 
