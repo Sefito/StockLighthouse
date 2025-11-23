@@ -56,26 +56,25 @@ export function PriceChart({ symbol }: PriceChartProps) {
             type: 'scatter',
             mode: 'lines',
             line: { color: '#4a90e2', width: 2 },
-            name: symbol,
-          },
+          } as any,
         ]}
         layout={{
           autosize: true,
           margin: { l: 50, r: 20, t: 20, b: 40 },
           xaxis: { 
-            title: 'Date',
+            title: 'Date' as any,
             showgrid: true,
             gridcolor: '#f0f0f0',
           },
           yaxis: { 
-            title: 'Price ($)',
+            title: 'Price ($)' as any,
             showgrid: true,
             gridcolor: '#f0f0f0',
           },
           hovermode: 'x unified',
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
-        }}
+        } as any}
         config={{ 
           responsive: true,
           displayModeBar: false,

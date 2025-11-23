@@ -60,26 +60,25 @@ export function PEChart({ symbol }: PEChartProps) {
             y: data.pe_ratios,
             type: 'bar',
             marker: { color: colors },
-            hovertemplate: '%{x}: %{y:.2f}<extra></extra>',
-          },
+          } as any,
         ]}
         layout={{
           autosize: true,
           margin: { l: 50, r: 20, t: 20, b: 80 },
           xaxis: { 
-            title: 'Stock Symbol',
+            title: 'Stock Symbol' as any,
             tickangle: -45,
             showgrid: false,
           },
           yaxis: { 
-            title: 'P/E Ratio',
+            title: 'P/E Ratio' as any,
             showgrid: true,
             gridcolor: '#f0f0f0',
           },
           hovermode: 'closest',
           paper_bgcolor: 'white',
           plot_bgcolor: 'white',
-        }}
+        } as any}
         config={{ 
           responsive: true,
           displayModeBar: false,
