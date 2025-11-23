@@ -374,18 +374,16 @@ class TestPriceIngestor:
         sample_ohlcv_data
     ):
         """Test ingestion with some failures."""
-        # Mock yfinance Ticker to succeed for first, fail for others
-        def mock_history(*args, **kwargs):
-            # Get the ticker symbol from the mock call
-            ticker_calls = mock_ticker_class.call_args_list
-            if len(ticker_calls) == 1:  # First ticker (AAPL)
-                return sample_ohlcv_data
-            else:  # Subsequent tickers fail
-                raise Exception("API error")
+        # Mock yfinance Ticker to succeed for 'AAPL', fail for others
+        def mock_ticker_factory(ticker_symbol):
+            mock_ticker = MagicMock()
+            if ticker_symbol == 'AAPL':
+                mock_ticker.history.return_value = sample_ohlcv_data
+            else:
+                mock_ticker.history.side_effect = Exception("API error")
+            return mock_ticker
         
-        mock_ticker = MagicMock()
-        mock_ticker.history = mock_history
-        mock_ticker_class.return_value = mock_ticker
+        mock_ticker_class.side_effect = mock_ticker_factory
         
         metrics = ingestor.ingest()
         
