@@ -196,7 +196,9 @@ def momentum(series: pd.Series, period: int = 20) -> pd.Series:
     Returns:
         Series with momentum values (percentage change)
     """
-    return ((series - series.shift(period)) / series.shift(period)) * 100
+    shifted = series.shift(period)
+    # Avoid division by zero
+    return ((series - shifted) / shifted.replace(0, np.nan)) * 100
 
 
 def volatility(series: pd.Series, period: int = 30) -> pd.Series:
