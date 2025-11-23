@@ -1,0 +1,187 @@
+{
+  "generated_at": "2025-11-23T16:38:41Z",
+  "total_stocks": 28,
+  "sector_count": 8,
+  "sectors": [
+    {
+      "sector": "Technology",
+      "count": 5,
+      "median_pe": 28.5,
+      "median_pb": 13.1,
+      "median_market_cap": 1750000000000.0,
+      "avg_dividend_yield": 0.00266,
+      "weighted_avg_pe": 35.7741214057508,
+      "top_3_tickers": [
+        {
+          "symbol": "MSFT",
+          "market_cap": 2820000000000.0
+        },
+        {
+          "symbol": "AAPL",
+          "market_cap": 2750000000000.0
+        },
+        {
+          "symbol": "GOOGL",
+          "market_cap": 1750000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Consumer Cyclical",
+      "count": 4,
+      "median_pe": 45.75,
+      "median_pb": 11.8,
+      "median_market_cap": 575000000000.0,
+      "avg_dividend_yield": 0.00985,
+      "weighted_avg_pe": 59.90865384615385,
+      "top_3_tickers": [
+        {
+          "symbol": "AMZN",
+          "market_cap": 1850000000000.0
+        },
+        {
+          "symbol": "TSLA",
+          "market_cap": 770000000000.0
+        },
+        {
+          "symbol": "HD",
+          "market_cap": 380000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Financial Services",
+      "count": 4,
+      "median_pe": 11.85,
+      "median_pb": 1.5,
+      "median_market_cap": 430000000000.0,
+      "avg_dividend_yield": 0.02105,
+      "weighted_avg_pe": 18.94698795180723,
+      "top_3_tickers": [
+        {
+          "symbol": "V",
+          "market_cap": 590000000000.0
+        },
+        {
+          "symbol": "JPM",
+          "market_cap": 570000000000.0
+        },
+        {
+          "symbol": "BAC",
+          "market_cap": 290000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Healthcare",
+      "count": 4,
+      "median_pe": 19.65,
+      "median_pb": 5.5,
+      "median_market_cap": 345000000000.0,
+      "avg_dividend_yield": 0.0356,
+      "weighted_avg_pe": 23.2,
+      "top_3_tickers": [
+        {
+          "symbol": "UNH",
+          "market_cap": 490000000000.0
+        },
+        {
+          "symbol": "JNJ",
+          "market_cap": 380000000000.0
+        },
+        {
+          "symbol": "ABBV",
+          "market_cap": 310000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Communication Services",
+      "count": 3,
+      "median_pe": 38.2,
+      "median_pb": 1.8,
+      "median_market_cap": 170000000000.0,
+      "avg_dividend_yield": 0.010066666666666666,
+      "weighted_avg_pe": 33.20666666666666,
+      "top_3_tickers": [
+        {
+          "symbol": "NFLX",
+          "market_cap": 280000000000.0
+        },
+        {
+          "symbol": "DIS",
+          "market_cap": 170000000000.0
+        },
+        {
+          "symbol": "CMCSA",
+          "market_cap": 150000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Energy",
+      "count": 3,
+      "median_pe": 11.8,
+      "median_pb": 2.1,
+      "median_market_cap": 290000000000.0,
+      "avg_dividend_yield": 0.03383333333333333,
+      "weighted_avg_pe": 11.772413793103448,
+      "top_3_tickers": [
+        {
+          "symbol": "XOM",
+          "market_cap": 450000000000.0
+        },
+        {
+          "symbol": "CVX",
+          "market_cap": 290000000000.0
+        },
+        {
+          "symbol": "COP",
+          "market_cap": 130000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Industrials",
+      "count": 3,
+      "median_pe": 17.0,
+      "median_pb": 7.5,
+      "median_market_cap": 110000000000.0,
+      "avg_dividend_yield": 0.019233333333333335,
+      "weighted_avg_pe": 17.410344827586208,
+      "top_3_tickers": [
+        {
+          "symbol": "CAT",
+          "market_cap": 180000000000.0
+        },
+        {
+          "symbol": "BA",
+          "market_cap": 110000000000.0
+        },
+        {
+          "symbol": "UPS",
+          "market_cap": 110000000000.0
+        }
+      ]
+    },
+    {
+      "sector": "Unknown",
+      "count": 2,
+      "median_pe": 16.75,
+      "median_pb": 2.85,
+      "median_market_cap": 40000000000.0,
+      "avg_dividend_yield": 0.0175,
+      "weighted_avg_pe": 16.3125,
+      "top_3_tickers": [
+        {
+          "symbol": "UNKNOWN1",
+          "market_cap": 50000000000.0
+        },
+        {
+          "symbol": "UNKNOWN2",
+          "market_cap": 30000000000.0
+        }
+      ]
+    }
+  ]
+}
