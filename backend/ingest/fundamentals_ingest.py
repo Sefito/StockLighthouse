@@ -279,8 +279,8 @@ class FundamentalsIngestor:
                 value = df.loc[row_name, column]
                 if pd.notna(value):
                     return float(value)
-        except Exception:
-            pass
+        except Exception as e:
+            logging.debug(f"Exception in _safe_get_value for row '{row_name}', column '{column}': {e}")
         return None
     
     def _fetch_fundamentals_with_retry(
