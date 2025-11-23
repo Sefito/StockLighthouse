@@ -1,0 +1,175 @@
+{
+  "description": "Normalized stock KPIs output model.\n\nThis is the canonical schema for stock data across all providers.\nAll fields except symbol are optional to handle incomplete data gracefully.\n\nAttributes:\n    symbol: Stock ticker symbol (required)\n    price: Current market price\n    previous_close: Previous trading day's closing price\n    change_pct: Percentage change from previous close\n    market_cap: Total market capitalization\n    pe_ratio: Price-to-earnings ratio (trailing)\n    pb_ratio: Price-to-book ratio\n    dividend_yield: Annual dividend yield as decimal (e.g., 0.02 for 2%)\n    sector: Business sector (e.g., \"Technology\", \"Healthcare\")\n    market: Market/region (e.g., \"us_market\", \"uk_market\")\n    exchange: Stock exchange code (e.g., \"NMS\", \"NYSE\", \"LSE\")\n    currency: Currency code (e.g., \"USD\", \"EUR\", \"GBP\")\n    industry: Industry classification (e.g., \"Consumer Electronics\")",
+  "examples": [
+    {
+      "change_pct": 1.18,
+      "currency": "USD",
+      "dividend_yield": 0.005,
+      "exchange": "NMS",
+      "industry": "Consumer Electronics",
+      "market": "us_market",
+      "market_cap": 2400000000000,
+      "pb_ratio": 40.2,
+      "pe_ratio": 28.5,
+      "previous_close": 148.5,
+      "price": 150.25,
+      "sector": "Technology",
+      "symbol": "AAPL"
+    }
+  ],
+  "properties": {
+    "symbol": {
+      "title": "Symbol",
+      "type": "string"
+    },
+    "price": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Price"
+    },
+    "previous_close": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Previous Close"
+    },
+    "change_pct": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Change Pct"
+    },
+    "market_cap": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Market Cap"
+    },
+    "pe_ratio": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pe Ratio"
+    },
+    "pb_ratio": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Pb Ratio"
+    },
+    "dividend_yield": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dividend Yield"
+    },
+    "sector": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sector"
+    },
+    "market": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Market"
+    },
+    "exchange": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Exchange"
+    },
+    "currency": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Currency"
+    },
+    "industry": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Industry"
+    }
+  },
+  "required": [
+    "symbol"
+  ],
+  "title": "StockKPIs",
+  "type": "object"
+}
