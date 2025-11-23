@@ -6,7 +6,7 @@ external dependencies.
 """
 
 import pytest
-from unittest.mock import Mock, MagicMock, patch, mock_open
+from unittest.mock import MagicMock, patch
 from datetime import datetime, timedelta
 from pathlib import Path
 import pandas as pd
