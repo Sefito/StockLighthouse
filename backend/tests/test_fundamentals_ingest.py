@@ -502,7 +502,6 @@ class TestExponentialBackoff:
         mock_ticker = MagicMock()
         mock_ticker.quarterly_financials = MagicMock(side_effect=Exception("Error"))
         mock_ticker_class.return_value = mock_ticker
-        mock_ticker_class.return_value = mock_ticker
         
         ingestor._fetch_fundamentals_with_retry('AAPL')
         
