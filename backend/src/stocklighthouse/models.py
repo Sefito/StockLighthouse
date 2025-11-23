@@ -66,13 +66,52 @@ class StockKPIs(BaseModel):
 
 
 class IngestorRequest(BaseModel):
-    """Request model for ingestor."""
+    """
+    Request model for stock data ingestor.
+    
+    Specifies which symbols to fetch and whether to use cached data if available.
+    Used with YFinanceIngestor and other ingestor implementations.
+    
+    Attributes:
+        symbols: List of stock ticker symbols to fetch (e.g., ["AAPL", "MSFT"])
+        use_cache: Whether to use cached data if available (default: True)
+        
+    Example:
+        >>> request = IngestorRequest(symbols=["AAPL", "GOOGL"], use_cache=True)
+        >>> request.symbols
+        ['AAPL', 'GOOGL']
+        
+    Raises:
+        ValidationError: If symbols list is empty or invalid
+    """
     symbols: list[str] = Field(..., min_length=1, description="List of stock symbols to fetch")
     use_cache: bool = Field(default=True, description="Whether to use cached data if available")
 
 
 class TickerData(BaseModel):
-    """Individual ticker data response."""
+    """
+    Individual ticker data response from ingestor.
+    
+    Contains the fetched data for a single stock symbol, including success status,
+    raw data, fast_info fallback, and error information if applicable.
+    
+    Attributes:
+        symbol: Stock ticker symbol (e.g., "AAPL")
+        success: True if data was successfully fetched
+        raw_data: Full raw data from provider (includes 'info' dict with all fields)
+        fast_info: Minimal fallback data if full info unavailable
+        error: Error message if fetch failed, None on success
+        
+    Example:
+        >>> ticker = TickerData(
+        ...     symbol="AAPL",
+        ...     success=True,
+        ...     raw_data={"info": {"regularMarketPrice": 150.0}},
+        ...     error=None
+        ... )
+        >>> ticker.success
+        True
+    """
     symbol: str
     success: bool
     raw_data: Optional[Dict[str, Any]] = None
@@ -81,7 +120,31 @@ class TickerData(BaseModel):
 
 
 class IngestorResponse(BaseModel):
-    """Response model from ingestor."""
+    """
+    Response model from ingestor containing all fetched ticker data.
+    
+    Aggregates results from fetching multiple symbols, providing both
+    individual ticker data and summary statistics.
+    
+    Attributes:
+        tickers: List of TickerData objects, one per requested symbol
+        fetched_count: Number of symbols newly fetched from API
+        cached_count: Number of symbols served from cache
+        failed_count: Number of symbols that failed to fetch
+        
+    Example:
+        >>> response = IngestorResponse(
+        ...     tickers=[...],
+        ...     fetched_count=2,
+        ...     cached_count=1,
+        ...     failed_count=0
+        ... )
+        >>> response.fetched_count + response.cached_count
+        3
+        
+    Note:
+        Total symbols = fetched_count + cached_count + failed_count
+    """
     tickers: list[TickerData]
     fetched_count: int
     cached_count: int
