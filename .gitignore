@@ -47,6 +47,7 @@ tests/current/
 
 # Data files (samples from ingestor)
 data/samples/*.json
+data/features/*.parquet
 
 # Logs
 *.log
