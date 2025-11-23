@@ -3,7 +3,6 @@ Unit tests for technical indicators.
 
 Tests each indicator with known values and edge cases.
 """
-import pytest
 import pandas as pd
 import numpy as np
 from backend.features.indicators import (
