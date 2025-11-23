@@ -17,10 +17,10 @@ test.describe('Sector Dashboard', () => {
     const heatmap = page.locator('[data-testid="sector-heatmap"]');
     await expect(heatmap).toBeVisible();
     
-    // Take full page screenshot
-    await page.screenshot({ 
-      path: '.test-results/screenshots/sector-dashboard-full.png',
-      fullPage: true 
+    // Visual regression: full page
+    await expect(page).toHaveScreenshot('sector-dashboard-full.png', {
+      fullPage: true,
+      animations: 'disabled',
     });
   });
 
@@ -34,10 +34,10 @@ test.describe('Sector Dashboard', () => {
     const statCards = page.locator('.stat-card');
     await expect(statCards).toHaveCount(3);
     
-    // Take screenshot of stats
+    // Visual regression: stats
     const dashboardStats = page.locator('.dashboard-stats');
-    await dashboardStats.screenshot({ 
-      path: '.test-results/screenshots/sector-dashboard-stats.png' 
+    await expect(dashboardStats).toHaveScreenshot('sector-dashboard-stats.png', {
+      animations: 'disabled',
     });
   });
 
@@ -51,10 +51,10 @@ test.describe('Sector Dashboard', () => {
     const sectorTiles = page.locator('.sector-tile');
     await expect(sectorTiles.first()).toBeVisible();
     
-    // Take screenshot of heatmap
+    // Visual regression: heatmap
     const heatmap = page.locator('[data-testid="sector-heatmap"]');
-    await heatmap.screenshot({ 
-      path: '.test-results/screenshots/sector-dashboard-heatmap.png' 
+    await expect(heatmap).toHaveScreenshot('sector-dashboard-heatmap.png', {
+      animations: 'disabled',
     });
   });
 
@@ -69,9 +69,9 @@ test.describe('Sector Dashboard', () => {
     await expect(legend).toBeVisible();
     await expect(legend).toContainText('P/E Ratio Color Legend');
     
-    // Take screenshot of legend
-    await legend.screenshot({ 
-      path: '.test-results/screenshots/sector-dashboard-legend.png' 
+    // Visual regression: legend
+    await expect(legend).toHaveScreenshot('sector-dashboard-legend.png', {
+      animations: 'disabled',
     });
   });
 
