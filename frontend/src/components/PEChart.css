@@ -1,0 +1,6 @@
+/* Shared styles for PE chart */
+@import './PriceChart.css';
+
+.pe-chart {
+  /* Inherits styles from PriceChart.css */
+}
