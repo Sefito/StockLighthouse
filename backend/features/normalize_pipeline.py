@@ -102,14 +102,16 @@ def apply_corporate_actions(df: pd.DataFrame,
     
     # Apply splits
     if 'splits' in actions:
-        for split_date, split_ratio in actions['splits']:
+        sorted_splits = sorted(actions['splits'], key=lambda x: pd.to_datetime(x[0]))
+        for split_date, split_ratio in sorted_splits:
             mask = result.index < pd.to_datetime(split_date)
             if mask.any():
                 result.loc[mask] = adjust_for_splits(result.loc[mask], split_ratio)
     
     # Apply dividends
     if 'dividends' in actions:
-        for div_date, div_amount in actions['dividends']:
+        sorted_dividends = sorted(actions['dividends'], key=lambda x: pd.to_datetime(x[0]))
+        for div_date, div_amount in sorted_dividends:
             mask = result.index < pd.to_datetime(div_date)
             if mask.any():
                 result.loc[mask] = adjust_for_dividends(result.loc[mask], div_amount)
