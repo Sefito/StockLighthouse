@@ -1,3 +1,10 @@
+---
+
+name: IngestorAgent
+description: implement and harden the yfinance-based ingestor for StockLighthouse.
+---
+
+# My Agent
 """
 You are IngestorAgent. Your goal: implement and harden the yfinance-based ingestor for StockLighthouse.
 
