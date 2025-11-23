@@ -31,19 +31,29 @@ StockLighthouse/
 ### Backend Setup
 ```bash
 cd backend
+# If requirements.txt exists:
 python -m pip install -r requirements.txt
+# Otherwise, install core dependencies:
+# pip install fastapi uvicorn pytest yfinance pydantic
+
 export PYTHONPATH=/path/to/backend/src
+# Once main.py is implemented:
 uvicorn stocklighthouse.api.main:app --host 0.0.0.0 --port 8000
 ```
+
+**Note**: The backend is being developed. Dependencies and source files will be created by agents as features are implemented.
 
 ### Frontend Setup
 ```bash
 cd frontend
+# If package.json exists:
 npm ci
 npm run dev  # Development server on port 5173
 npm run build  # Production build
 npm run preview  # Preview production build
 ```
+
+**Note**: The frontend is being developed. Package files and source code will be created by agents as features are implemented.
 
 ### Docker Setup
 ```bash
@@ -57,15 +67,19 @@ docker-compose up --build
 ### Backend Testing
 ```bash
 cd backend
+# Ensure pytest is installed and tests exist
 pytest -q  # Run all backend tests
-pytest tests/test_normalizer.py -v  # Run specific test
+pytest tests/test_normalizer.py -v  # Run specific test file
 ```
 
 ### Frontend Testing
 ```bash
 cd frontend
+# Ensure dependencies are installed first
 npm run build  # Must build before E2E tests
 npx playwright test --config=playwright.config.ts
+# Install Playwright browsers if needed:
+# npx playwright install --with-deps
 ```
 
 ### CI/CD
@@ -127,16 +141,36 @@ Delegate tasks to relevant agents when available - they have domain-specific exp
 ### Adding Python Dependencies
 ```bash
 cd backend
-# Add to requirements.txt
+# Create requirements.txt if it doesn't exist, then add dependencies
+# Example requirements.txt content:
+# fastapi>=0.100.0
+# uvicorn[standard]>=0.23.0
+# pytest>=7.4.0
+# yfinance>=0.2.0
+# pydantic>=2.0.0
+
+# Install dependencies:
 pip install -r requirements.txt
+# Or install individual packages:
+pip install <package-name>
 ```
+
+**Note**: Create `backend/requirements.txt` when adding the first Python dependencies.
 
 ### Adding Node Dependencies
 ```bash
 cd frontend
+# If package.json exists:
 npm install <package-name>
 # Updates package.json and package-lock.json
+
+# If starting from scratch, initialize with:
+# npm init -y
+# npm install react react-dom typescript vite @vitejs/plugin-react
+# npm install -D @types/react @types/react-dom playwright @playwright/test
 ```
+
+**Note**: Create `frontend/package.json` when setting up the frontend project.
 
 ## Security
 - Never commit secrets or API keys

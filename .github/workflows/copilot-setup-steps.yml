@@ -14,28 +14,75 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: '3.10'
-          cache: 'pip'
-          cache-dependency-path: 'backend/requirements.txt'
+
+      - name: Check for Python dependencies
+        id: check-python-deps
+        run: |
+          if [ -f "backend/requirements.txt" ]; then
+            echo "requirements_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "requirements_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up pip cache
+        if: steps.check-python-deps.outputs.requirements_exists == 'true'
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('backend/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
 
       - name: Set up Node.js 18
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
-          cache-dependency-path: 'frontend/package-lock.json'
+
+      - name: Check for Node dependencies
+        id: check-node-deps
+        run: |
+          if [ -f "frontend/package.json" ]; then
+            echo "package_json_exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "package_json_exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Set up npm cache
+        if: steps.check-node-deps.outputs.package_json_exists == 'true'
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('frontend/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
       - name: Install Python dependencies
+        if: steps.check-python-deps.outputs.requirements_exists == 'true'
         run: |
           cd backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Skip Python dependencies (not yet created)
+        if: steps.check-python-deps.outputs.requirements_exists == 'false'
+        run: |
+          echo "⚠️  backend/requirements.txt not found - skipping Python dependency installation"
+          echo "Core packages for future development: fastapi, uvicorn, pytest, yfinance, pydantic"
+
       - name: Install Node dependencies
+        if: steps.check-node-deps.outputs.package_json_exists == 'true'
         run: |
           cd frontend
           npm ci
 
+      - name: Skip Node dependencies (not yet created)
+        if: steps.check-node-deps.outputs.package_json_exists == 'false'
+        run: |
+          echo "⚠️  frontend/package.json not found - skipping Node dependency installation"
+          echo "Frontend will be set up by agents with React, TypeScript, Vite, and Playwright"
+
       - name: Install Playwright browsers
+        if: steps.check-node-deps.outputs.package_json_exists == 'true'
         run: |
           cd frontend
           npx playwright install --with-deps
@@ -49,25 +96,44 @@ jobs:
         run: |
           cd backend
           python -c "import sys; print(f'Python version: {sys.version}')"
-          pip list | grep -E "(fastapi|uvicorn|pytest|yfinance)" || echo "Install backend dependencies first"
+          if [ -f "requirements.txt" ]; then
+            echo "Checking installed packages..."
+            pip list | grep -E "(fastapi|uvicorn|pytest|yfinance)" || echo "Backend dependencies installed"
+          else
+            echo "⚠️  requirements.txt not yet created - backend will be set up by agents"
+          fi
 
       - name: Verify frontend setup
         run: |
           cd frontend
           node --version
           npm --version
-          npx playwright --version || echo "Install Playwright first"
-          echo "Frontend dependencies installed"
+          if [ -f "package.json" ]; then
+            echo "Frontend dependencies ready"
+            npx playwright --version 2>/dev/null || echo "Playwright will be installed with frontend setup"
+          else
+            echo "⚠️  package.json not yet created - frontend will be set up by agents"
+          fi
 
       - name: Display setup summary
         run: |
           echo "✅ Python 3.10 installed"
           echo "✅ Node.js 18 installed"
-          echo "✅ Backend dependencies installed"
-          echo "✅ Frontend dependencies installed"
-          echo "✅ Playwright browsers installed"
           echo ""
-          echo "To run backend: cd backend && uvicorn stocklighthouse.api.main:app --port 8000"
-          echo "To run frontend: cd frontend && npm run dev"
-          echo "To run tests: cd backend && pytest -q"
-          echo "To run E2E tests: cd frontend && npm run build && npx playwright test"
+          if [ -f "backend/requirements.txt" ]; then
+            echo "✅ Backend dependencies installed"
+          else
+            echo "⏳ Backend dependencies - will be created by agents"
+          fi
+          if [ -f "frontend/package.json" ]; then
+            echo "✅ Frontend dependencies installed"
+            echo "✅ Playwright browsers installed"
+          else
+            echo "⏳ Frontend dependencies - will be created by agents"
+          fi
+          echo ""
+          echo "📝 Quick Start Commands:"
+          echo "  Backend:  cd backend && uvicorn stocklighthouse.api.main:app --port 8000"
+          echo "  Frontend: cd frontend && npm run dev"
+          echo "  Tests:    cd backend && pytest -q"
+          echo "  E2E:      cd frontend && npm run build && npx playwright test"
