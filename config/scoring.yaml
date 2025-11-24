@@ -1,0 +1,82 @@
+# StockLighthouse Scoring Configuration
+# Weights and parameters for computing composite buy scores
+
+# Composite score weights (must sum to 1.0)
+composite_weights:
+  technical: 0.6
+  fundamental: 0.4
+
+# Technical indicator weights (within technical score)
+technical_features:
+  rsi:
+    weight: 0.25
+    optimal_range: [30, 70]  # RSI below 30 is oversold (good buy), above 70 is overbought
+  macd_signal:
+    weight: 0.20
+    direction: positive  # Positive MACD signal is bullish
+  volume_trend:
+    weight: 0.15
+    direction: positive  # Increasing volume is positive
+  price_momentum:
+    weight: 0.15
+    direction: positive  # Price momentum (short-term trend)
+  moving_avg_cross:
+    weight: 0.15
+    direction: positive  # SMA50 > SMA200 is golden cross
+  bollinger_position:
+    weight: 0.10
+    optimal_range: [0, 0.3]  # Near lower band is good buy signal
+
+# Fundamental indicator weights (within fundamental score)
+fundamental_features:
+  pe_ratio:
+    weight: 0.25
+    direction: negative  # Lower P/E is better (normalized inverted)
+    max_threshold: 50  # Ignore extremely high P/E ratios
+  pb_ratio:
+    weight: 0.15
+    direction: negative  # Lower P/B is better
+    max_threshold: 10
+  roe:
+    weight: 0.20
+    direction: positive  # Higher ROE is better
+  debt_to_equity:
+    weight: 0.15
+    direction: negative  # Lower debt is better
+    max_threshold: 3.0
+  earnings_growth:
+    weight: 0.15
+    direction: positive  # Higher growth is better
+  dividend_yield:
+    weight: 0.10
+    direction: positive  # Higher dividend yield is better
+
+# Filtering rules applied before scoring
+filters:
+  min_market_cap: 1000000000  # $1B minimum
+  min_avg_volume: 100000  # Minimum 100k shares/day average volume
+  min_price: 5.0  # No penny stocks below $5
+  max_pe_ratio: 100  # Filter out extreme valuations
+  tradable_exchanges:
+    - NMS  # NASDAQ
+    - NYQ  # NYSE
+    - NYSE  # NYSE alternative code
+
+# Scoring parameters
+scoring:
+  normalization_method: "zscore"  # Options: "zscore", "minmax"
+  handle_outliers: true  # Clip outliers beyond 3 standard deviations
+  outlier_threshold: 3.0  # Number of standard deviations
+  min_data_coverage: 0.5  # Minimum fraction of features required (50%)
+
+# Top candidates parameters
+top_candidates:
+  top_k: 100  # Compute detailed explanations for top 100
+  save_top_n: 50  # Save top 50 to Redis
+  redis_key: "top_candidates/daily"
+  redis_ttl: 86400  # 24 hours in seconds
+
+# Performance SLA
+sla:
+  max_runtime_seconds: 120  # 2 minutes for S&P 500
+  target_ticker_count: 500  # Designed for S&P 500 scale
