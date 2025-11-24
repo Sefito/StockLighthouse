@@ -315,3 +315,183 @@ Potential improvements:
 - More sophisticated market inference
 - Validation rules for data quality
 - Configurable field mappings
+
+## Feature Generation Pipeline
+
+The normalization pipeline has been extended to include technical indicator computation and feature engineering for time series analysis.
+
+### Overview
+
+The feature generation module processes normalized price data and computes technical indicators including:
+- **SMA** (Simple Moving Average): 10, 50, 200 day
+- **EMA** (Exponential Moving Average): 20, 50 day
+- **RSI** (Relative Strength Index): 14 day
+- **MACD** (Moving Average Convergence Divergence): 12, 26, 9
+- **ATR** (Average True Range): 14 day
+- **ADX** (Average Directional Index): 14 day
+- **Momentum**: 20 day percentage change
+- **Volatility**: 30 day rolling standard deviation
+- **OBV** (On-Balance Volume)
+
+### Pipeline Steps
+
+```python
+from backend.features.normalize_pipeline import (
+    normalize_and_generate_features,
+    process_multi_ticker_data
+)
+import pandas as pd
+
+# Step 1: Load price data
+prices_df = pd.read_parquet('data/normalized/prices.parquet')
+
+# Step 2: Apply corporate actions and generate features
+features_df = normalize_and_generate_features(
+    prices_df,
+    corporate_actions={
+        'splits': [('2020-08-31', 4.0)],  # 4-for-1 split
+        'dividends': [('2021-02-05', 0.22)]  # $0.22 dividend
+    }
+)
+
+# Step 3: Process multiple tickers
+data = {
+    'AAPL': aapl_prices,
+    'MSFT': msft_prices,
+    'GOOGL': googl_prices
+}
+
+combined_features = process_multi_ticker_data(
+    data,
+    output_path='data/features/daily_features.parquet'
+)
+```
+
+### Corporate Action Adjustments
+
+The pipeline automatically adjusts historical prices for:
+
+**Stock Splits**:
+- Divides historical prices by split ratio
+- Multiplies historical volume by split ratio
+- Example: 2-for-1 split → prices halved, volume doubled
+
+**Dividends**:
+- Subtracts dividend amount from historical prices
+- Ensures price continuity for technical analysis
+
+### Missing Data Handling
+
+The pipeline handles missing data using configurable strategies:
+- **Forward Fill** (default): Carries forward last known value
+- **Backward Fill**: Uses next available value
+- **Interpolation**: Linear interpolation between points
+- **Limit**: Maximum consecutive NaN values to fill (default: 5)
+
+### Feature Standardization
+
+All features follow standardized naming conventions:
+
+| Feature | Column Name | Description |
+|---------|------------|-------------|
+| SMA 10-day | `sma_10` | 10-period simple moving average |
+| SMA 50-day | `sma_50` | 50-period simple moving average |
+| SMA 200-day | `sma_200` | 200-period simple moving average |
+| EMA 20-day | `ema_20` | 20-period exponential moving average |
+| EMA 50-day | `ema_50` | 50-period exponential moving average |
+| RSI 14-day | `rsi_14` | 14-period relative strength index (0-100) |
+| MACD Line | `macd` | MACD line (12,26) |
+| MACD Signal | `macd_signal` | 9-period signal line |
+| MACD Histogram | `macd_histogram` | MACD - Signal |
+| ATR 14-day | `atr_14` | 14-period average true range |
+| ATR Volatility | `atr_volatility` | ATR normalized by price |
+| ADX 14-day | `adx_14` | 14-period average directional index |
+| Momentum 20-day | `momentum_20` | 20-day percentage change |
+| Volatility 30-day | `volatility_30` | 30-day rolling standard deviation |
+| OBV | `obv` | On-balance volume |
+
+### Output Format
+
+Features are saved to `data/features/daily_features.parquet` with schema:
+
+```
+ticker (string): Stock symbol
+date (datetime): Trading date
+open, high, low, close (float): OHLC prices
+volume (float): Trading volume
+sma_10, sma_50, sma_200 (float): Simple moving averages
+ema_20, ema_50 (float): Exponential moving averages
+rsi_14 (float): Relative strength index
+macd, macd_signal, macd_histogram (float): MACD indicators
+atr_14, atr_volatility (float): ATR indicators
+adx_14 (float): Average directional index
+momentum_20 (float): Momentum indicator
+volatility_30 (float): Volatility measure
+obv (float): On-balance volume
+```
+
+### Quality Assurance
+
+The pipeline includes coverage checking to ensure data quality:
+
+```python
+from backend.features.normalize_pipeline import check_feature_coverage
+
+coverage = check_feature_coverage(features_df, threshold=0.95)
+
+print(f"Dates meeting 95% threshold: {coverage['dates_meeting_threshold']}/{coverage['total_dates']}")
+print(f"Average coverage: {coverage['average_coverage']:.2%}")
+```
+
+**Acceptance Criteria**: For each trading date, features should exist for >95% of tickers.
+
+### Running Tests
+
+Comprehensive test suite for all indicators:
+
+```bash
+PYTHONPATH=. pytest tests/indicators_test.py -v
+PYTHONPATH=. pytest tests/test_normalize_pipeline.py -v
+```
+
+All 50 tests validate:
+- Correct indicator calculations with known values
+- Edge case handling (insufficient data, missing columns, NaN values)
+- Corporate action adjustments
+- Feature coverage requirements
+- Multi-ticker processing
+
+### Example Usage
+
+Complete pipeline example:
+
+```python
+from backend.features.indicators import compute_all_indicators
+from backend.features.normalize_pipeline import (
+    process_multi_ticker_data,
+    check_feature_coverage
+)
+import pandas as pd
+
+# Load price data for multiple tickers
+tickers = ['AAPL', 'MSFT', 'GOOGL']
+data = {}
+
+for ticker in tickers:
+    df = pd.read_parquet(f'data/normalized/{ticker}_prices.parquet')
+    data[ticker] = df
+
+# Process all tickers with feature generation
+features_df = process_multi_ticker_data(
+    data,
+    output_path='data/features/daily_features.parquet'
+)
+
+# Check coverage
+coverage = check_feature_coverage(features_df)
+print(f"Feature coverage: {coverage['average_coverage']:.1%}")
+print(f"Dates meeting threshold: {coverage['percentage_dates_meeting_threshold']:.1%}")
+
+# Sample output
+print(features_df[['ticker', 'date', 'close', 'sma_50', 'rsi_14', 'macd']].head())
+```
