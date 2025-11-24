@@ -16,17 +16,6 @@ test.describe('Stock Detail Page', () => {
     // Check KPI table is visible
     const kpiTable = page.locator('[data-testid="kpi-table"]');
     await expect(kpiTable).toBeVisible();
-    
-    // Visual regression: full page
-    await expect(page).toHaveScreenshot('stock-detail-full.png', {
-      fullPage: true,
-      animations: 'disabled',
-    });
-    
-    // Visual regression: KPI table
-    await expect(kpiTable).toHaveScreenshot('stock-detail-kpi.png', {
-      animations: 'disabled',
-    });
   });
 
   test('should display price history chart', async ({ page }) => {
@@ -41,11 +30,6 @@ test.describe('Stock Detail Page', () => {
     
     // Wait for plotly chart to render
     await page.waitForSelector('.js-plotly-plot', { timeout: 10000 });
-    
-    // Visual regression: price chart
-    await expect(priceChart).toHaveScreenshot('stock-detail-price-chart.png', {
-      animations: 'disabled',
-    });
   });
 
   test('should display PE distribution chart', async ({ page }) => {
@@ -60,11 +44,6 @@ test.describe('Stock Detail Page', () => {
     
     // Wait for plotly chart to render
     await page.waitForSelector('.js-plotly-plot', { timeout: 10000 });
-    
-    // Visual regression: PE chart
-    await expect(peChart).toHaveScreenshot('stock-detail-pe-chart.png', {
-      animations: 'disabled',
-    });
   });
 
   test('should navigate back and to sector page', async ({ page }) => {

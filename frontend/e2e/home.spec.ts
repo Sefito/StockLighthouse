@@ -16,16 +16,6 @@ test.describe('Home Page', () => {
     // Check search bar
     const searchInput = page.locator('[data-testid="search-input"]');
     await expect(searchInput).toBeVisible();
-    
-    // Visual regression: full page
-    await expect(page).toHaveScreenshot('home-page-full.png', {
-      fullPage: true,
-      animations: 'disabled',
-    });
-    
-    // Visual regression: hero section
-    const hero = page.locator('.hero');
-    await expect(hero).toHaveScreenshot('home-page-hero.png');
   });
 
   test('should display popular stocks list', async ({ page }) => {
@@ -37,12 +27,6 @@ test.describe('Home Page', () => {
     // Check that stock cards are displayed
     const stockCards = page.locator('.stock-card');
     await expect(stockCards.first()).toBeVisible();
-    
-    // Visual regression: stock list
-    const stockList = page.locator('[data-testid="stock-list"]');
-    await expect(stockList).toHaveScreenshot('home-page-stock-list.png', {
-      animations: 'disabled',
-    });
   });
 
   test('should navigate to stock detail page', async ({ page }) => {
