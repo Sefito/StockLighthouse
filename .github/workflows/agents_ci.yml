@@ -125,9 +125,9 @@ jobs:
         run: |
           uvicorn stocklighthouse.api.main:app --host 0.0.0.0 --port 8000 &
           echo $! > backend.pid
-          # Wait for backend to be ready
+          # Wait for backend to be ready (60 seconds max: 30 retries * 2 seconds)
           for i in {1..30}; do
-            if curl -s http://localhost:8000/health > /dev/null 2>&1 || curl -s http://localhost:8000/ > /dev/null 2>&1; then
+            if curl -s http://localhost:8000/ > /dev/null 2>&1; then
               echo "Backend is ready"
               break
             fi
@@ -140,7 +140,7 @@ jobs:
         run: |
           npm run dev &
           echo $! > frontend.pid
-          # Wait for frontend to be ready
+          # Wait for frontend to be ready (60 seconds max: 30 retries * 2 seconds)
           for i in {1..30}; do
             if curl -s http://localhost:5173 > /dev/null 2>&1; then
               echo "Frontend is ready"
@@ -162,10 +162,12 @@ jobs:
         if: always()
         working-directory: ./backend
         run: |
+          # Stop backend (|| true prevents job failure if process already exited)
           if [ -f backend.pid ]; then
             kill $(cat backend.pid) || true
             rm backend.pid
           fi
+          # Stop frontend (|| true prevents job failure if process already exited)
           if [ -f ../frontend/frontend.pid ]; then
             kill $(cat ../frontend/frontend.pid) || true
             rm ../frontend/frontend.pid
