@@ -62,7 +62,6 @@ filters:
 # Scoring parameters
 scoring:
   normalization_method: "zscore"  # Options: "zscore", "minmax"
-  handle_outliers: true  # Clip outliers beyond 3 standard deviations
   outlier_threshold: 3.0  # Number of standard deviations
 
 # Top candidates parameters
