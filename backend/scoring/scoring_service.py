@@ -30,7 +30,6 @@ from scoring.sample_scoring import (
     normalize_zscore,
     compute_weighted_score,
     apply_filters,
-    get_top_k_with_explanations,
     create_explanation_text,
 )
 
