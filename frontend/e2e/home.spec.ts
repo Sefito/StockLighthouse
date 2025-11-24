@@ -24,8 +24,8 @@ test.describe('Home Page', () => {
     // Wait for stocks to load
     await page.waitForSelector('[data-testid="stock-list"]', { timeout: 10000 });
     
-    // Check that stock cards are displayed
-    const stockCards = page.locator('.stock-card');
+    // Check that stock cards are displayed (using data-testid pattern)
+    const stockCards = page.locator('[data-testid^="stock-card-"]');
     await expect(stockCards.first()).toBeVisible();
   });
 
@@ -35,8 +35,8 @@ test.describe('Home Page', () => {
     // Wait for stocks to load
     await page.waitForSelector('[data-testid="stock-list"]');
     
-    // Click first stock card
-    await page.locator('.stock-card').first().click();
+    // Click first stock card (using data-testid pattern)
+    await page.locator('[data-testid^="stock-card-"]').first().click();
     
     // Wait for navigation
     await page.waitForURL(/\/stock\/.+/);

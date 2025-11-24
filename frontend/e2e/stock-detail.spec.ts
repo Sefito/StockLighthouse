@@ -46,18 +46,20 @@ test.describe('Stock Detail Page', () => {
     await page.waitForSelector('.js-plotly-plot', { timeout: 10000 });
   });
 
-  test('should navigate back and to sector page', async ({ page }) => {
-    await page.goto('http://localhost:5173/stock/AAPL');
+  test('should navigate back when back button clicked', async ({ page }) => {
+    // First go to home page
+    await page.goto('http://localhost:5173');
+    await page.waitForSelector('[data-testid="home-page"]');
     
-    // Wait for page to load
+    // Navigate to stock detail
+    await page.goto('http://localhost:5173/stock/AAPL');
     await page.waitForSelector('[data-testid="stock-detail-page"]');
     
-    // Click sector button if available
-    const sectorButton = page.locator('.sector-button');
-    if (await sectorButton.isVisible()) {
-      await sectorButton.click();
-      await page.waitForURL(/\/sector\/.+/);
-      await expect(page.locator('[data-testid="sector-dashboard"]')).toBeVisible();
-    }
+    // Click back button (MUI Button with Back text)
+    await page.getByRole('button', { name: /back/i }).click();
+    
+    // Should navigate back to home
+    await page.waitForURL('http://localhost:5173/');
+    await expect(page.locator('[data-testid="home-page"]')).toBeVisible();
   });
 });
