@@ -31,7 +31,6 @@ fundamental_features:
   pe_ratio:
     weight: 0.25
     direction: negative  # Lower P/E is better (normalized inverted)
-    max_threshold: 50  # Ignore extremely high P/E ratios
   pb_ratio:
     weight: 0.15
     direction: negative  # Lower P/B is better
