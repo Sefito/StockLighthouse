@@ -8,9 +8,10 @@ A comprehensive stock data ingestion, normalization, and analysis platform with 
 - **YFinance Ingestor**: Fetch stock data with exponential backoff retry logic, in-memory TTL caching, and fast_info fallback support
 - **Data Normalization**: Convert raw provider data to standardized KPIs with defensive parsing and edge case handling
 - **Sector Analysis**: Aggregate stocks by sector with weighted averages and comprehensive statistics
+- **Scoring Pipeline**: Compute composite buy scores combining technical and fundamental indicators with configurable weights
 - **REST API**: FastAPI-based RESTful API with CORS support for frontend integration
 - **Type Safety**: Full Pydantic models for data validation and JSON schema generation
-- **Comprehensive Testing**: 70+ unit tests with mocked HTTP requests and 99% code coverage
+- **Comprehensive Testing**: 150+ unit tests with mocked HTTP requests and 99% code coverage
 
 ### Frontend
 - **React + TypeScript**: Modern, type-safe UI with React 19 and TypeScript
@@ -21,6 +22,7 @@ A comprehensive stock data ingestion, normalization, and analysis platform with 
 
 ### DevOps
 - **Containerization**: Docker and docker-compose support for easy deployment
+- **Redis Integration**: Optional Redis caching for top candidate rankings
 - **CI/CD Ready**: GitHub Actions workflows for testing and deployment
 - **Development Tools**: Hot reload, linting, and automated testing
 
@@ -220,6 +222,36 @@ weighted_pe = weighted_average_pe(stocks)
 print(f"\nMarket-cap weighted P/E: {weighted_pe:.2f}")
 ```
 
+### Python API - Scoring Pipeline
+
+```python
+from backend.scoring.scoring_service import ScoringService
+
+# Initialize scoring service
+service = ScoringService(config_path='config/scoring.yaml')
+
+# Run scoring pipeline
+result_df = service.run_scoring_pipeline(
+    features_path='data/features/daily_features.parquet',
+    fundamentals_path='data/fundamentals/latest.parquet',
+    date_str='2025-11-24'
+)
+
+# View top candidates
+print("\nTop 10 Buy Candidates:")
+top_10 = result_df.nlargest(10, 'composite_score')
+for _, row in top_10.iterrows():
+    print(f"{row['symbol']}: {row['composite_score']:.3f} "
+          f"(tech: {row['tech_score']:.3f}, fund: {row['fund_score']:.3f})")
+
+# Load explanations
+import json
+with open('data/ranks/2025-11-24_explanations.json') as f:
+    explanations = json.load(f)
+    print(f"\nExplanation for AAPL:")
+    print(explanations['AAPL']['explanation'])
+```
+
 ### REST API Examples
 
 ```bash
@@ -255,10 +287,16 @@ StockLighthouse/
 │   │       ├── normalizer.py      # Data normalization
 │   │       ├── analyzer.py        # Sector analysis
 │   │       └── __init__.py
+│   ├── scoring/                   # Scoring pipeline
+│   │   ├── __init__.py
+│   │   ├── sample_scoring.py      # Scoring functions
+│   │   ├── scoring_service.py     # Main scoring service
+│   │   └── README.md              # Scoring documentation
 │   ├── tests/
 │   │   ├── test_ingestor.py      # Ingestor tests
 │   │   ├── test_normalizer.py    # Normalizer tests
 │   │   ├── test_analyzer.py      # Analyzer tests
+│   │   ├── test_scoring.py       # Scoring tests
 │   │   └── README.md
 │   ├── requirements.txt           # Python dependencies
 │   ├── pytest.ini                 # Pytest configuration
@@ -288,11 +326,16 @@ StockLighthouse/
 │   └── README.md
 ├── scripts/
 │   ├── demo_fetch.py             # Fetch demo data
-│   └── demo_analyzer.py          # Analyzer demo
+│   ├── demo_analyzer.py          # Analyzer demo
+│   └── generate_sample_features.py  # Generate scoring features
 ├── data/
 │   ├── samples/                  # Raw sample data
 │   ├── normalized/               # Normalized KPIs
-│   └── aggregates/               # Sector aggregates
+│   ├── aggregates/               # Sector aggregates
+│   ├── features/                 # Feature data for scoring
+│   └── ranks/                    # Scoring results (parquet + JSON)
+├── config/
+│   └── scoring.yaml              # Scoring configuration
 ├── tests/                        # Root-level test utilities
 │   └── utils/
 │       └── visual-diff.js        # Visual diff tool
@@ -497,6 +540,14 @@ python sample_normalize.py
 
 # Run analyzer demo
 python scripts/demo_analyzer.py
+
+# Generate sample features for scoring
+python scripts/generate_sample_features.py
+
+# Run scoring pipeline
+python backend/scoring/scoring_service.py \
+  --features data/features/daily_features.parquet \
+  --date $(date +%Y-%m-%d)
 ```
 
 ## 🧪 Testing
@@ -617,6 +668,7 @@ We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for deta
 - [YFinance Ingestor](backend/INGESTOR_README.md) - Data fetching API
 - [Normalizer](NORMALIZER_README.md) - Data normalization
 - [Analyzer](backend/ANALYZER_README.md) - Sector analysis
+- [Scoring Pipeline](backend/scoring/README.md) - Stock scoring and ranking
 - [Frontend](frontend/README.md) - UI components and setup
 - [Contributing](CONTRIBUTING.md) - Contribution guidelines
 - [Tests](backend/tests/README.md) - Testing documentation

@@ -1,0 +1,722 @@
+{
+  "HON": {
+    "composite_score": 0.606881986212241,
+    "tech_score": 0.6128928409827484,
+    "fund_score": 0.5978657040564797,
+    "contributions": {
+      "norm_rsi": 0.7864513944757231,
+      "norm_macd_signal": 0.5541305729732454,
+      "norm_volume_trend": 0.4987766852776652,
+      "norm_price_momentum": 0.5707274374379495,
+      "norm_moving_avg_cross": 0.5151256125849922,
+      "norm_bollinger_position": 0.6775941747407757,
+      "norm_pe_ratio": 0.5611813546796321,
+      "norm_pb_ratio": 0.26077867349021683,
+      "norm_roe": 0.6912907715095072,
+      "norm_debt_to_equity": 0.4175564077121545,
+      "norm_earnings_growth": 0.4903052015382316,
+      "norm_dividend_yield": 0.7810737037410731
+    },
+    "explanation": "HON scored 0.61 (tech: 0.61, fund: 0.60). Top factors: norm_rsi (0.79), norm_dividend_yield (0.78), norm_roe (0.69), norm_bollinger_position (0.68), norm_price_momentum (0.57)"
+  },
+  "JNJ": {
+    "composite_score": 0.6006388401919249,
+    "tech_score": 0.5373221402975056,
+    "fund_score": 0.6956138900335539,
+    "contributions": {
+      "norm_rsi": 0.81429290748487,
+      "norm_macd_signal": 0.37799670766139565,
+      "norm_volume_trend": 0.2985979125319797,
+      "norm_price_momentum": 0.501124889661041,
+      "norm_moving_avg_cross": 0.7340228732264352,
+      "norm_bollinger_position": 0.2808772058109054,
+      "norm_pe_ratio": 0.29537901710133757,
+      "norm_pb_ratio": 0.42772241771397684,
+      "norm_roe": 0.5997218748422655,
+      "norm_debt_to_equity": 0.19762285212074374,
+      "norm_earnings_growth": 0.730486015042688,
+      "norm_dividend_yield": 0.8374315755924021
+    },
+    "explanation": "JNJ scored 0.60 (tech: 0.54, fund: 0.70). Top factors: norm_dividend_yield (0.84), norm_rsi (0.81), norm_moving_avg_cross (0.73), norm_earnings_growth (0.73), norm_roe (0.60)"
+  },
+  "HD": {
+    "composite_score": 0.572427863784498,
+    "tech_score": 0.5493751166236117,
+    "fund_score": 0.6070069845258271,
+    "contributions": {
+      "norm_rsi": 0.3602110881690215,
+      "norm_macd_signal": 0.5620129320454756,
+      "norm_volume_trend": 0.7102989218122729,
+      "norm_price_momentum": 0.5201074026911069,
+      "norm_moving_avg_cross": 0.5982702903148222,
+      "norm_bollinger_position": 0.7261826594953088,
+      "norm_pe_ratio": 0.2683990805802325,
+      "norm_pb_ratio": 0.4114162845572375,
+      "norm_roe": 0.5762972733692501,
+      "norm_debt_to_equity": 0.32232744549731684,
+      "norm_earnings_growth": 0.4565297746391674,
+      "norm_dividend_yield": 0.5042939330934347
+    },
+    "explanation": "HD scored 0.57 (tech: 0.55, fund: 0.61). Top factors: norm_bollinger_position (0.73), norm_volume_trend (0.71), norm_moving_avg_cross (0.60), norm_roe (0.58), norm_macd_signal (0.56)"
+  },
+  "JPM": {
+    "composite_score": 0.5694802942474899,
+    "tech_score": 0.5440406218755852,
+    "fund_score": 0.6076398028053471,
+    "contributions": {
+      "norm_rsi": 0.4029203479211482,
+      "norm_macd_signal": 0.6275102322499787,
+      "norm_volume_trend": 0.6962864077200751,
+      "norm_price_momentum": 0.561868931357252,
+      "norm_moving_avg_cross": 0.5604772549830813,
+      "norm_bollinger_position": 0.4501359933624112,
+      "norm_pe_ratio": 0.2805567062965329,
+      "norm_pb_ratio": 0.4354872430267098,
+      "norm_roe": 0.6210169670904612,
+      "norm_debt_to_equity": 0.49691387622451927,
+      "norm_earnings_growth": 0.6229050256604834,
+      "norm_dividend_yield": 0.5
+    },
+    "explanation": "JPM scored 0.57 (tech: 0.54, fund: 0.61). Top factors: norm_volume_trend (0.70), norm_macd_signal (0.63), norm_earnings_growth (0.62), norm_roe (0.62), norm_price_momentum (0.56)"
+  },
+  "CAT": {
+    "composite_score": 0.5621149521332546,
+    "tech_score": 0.6208587955094382,
+    "fund_score": 0.4739991870689792,
+    "contributions": {
+      "norm_rsi": 0.646865033334626,
+      "norm_macd_signal": 0.3702844714468394,
+      "norm_volume_trend": 0.6942846199926181,
+      "norm_price_momentum": 0.6643745017196082,
+      "norm_moving_avg_cross": 0.7458143002499383,
+      "norm_bollinger_position": 0.6941462959208913,
+      "norm_pe_ratio": 0.3709894564876444,
+      "norm_pb_ratio": 0.36482733268083933,
+      "norm_roe": 0.4698218121282711,
+      "norm_debt_to_equity": 0.6352226070603549,
+      "norm_earnings_growth": 0.2751432227738228,
+      "norm_dividend_yield": 0.3151819631034193
+    },
+    "explanation": "CAT scored 0.56 (tech: 0.62, fund: 0.47). Top factors: norm_moving_avg_cross (0.75), norm_volume_trend (0.69), norm_bollinger_position (0.69), norm_price_momentum (0.66), norm_rsi (0.65)"
+  },
+  "INTC": {
+    "composite_score": 0.5525009952624782,
+    "tech_score": 0.5785601465206975,
+    "fund_score": 0.5134122683751492,
+    "contributions": {
+      "norm_rsi": 0.5323739135112973,
+      "norm_macd_signal": 0.5447738158011736,
+      "norm_volume_trend": 0.4574064055768902,
+      "norm_price_momentum": 0.7554905642639248,
+      "norm_moving_avg_cross": 0.8105159767378787,
+      "norm_bollinger_position": 0.3299996299583456,
+      "norm_pe_ratio": 0.6216363976250713,
+      "norm_pb_ratio": 0.2871790795535091,
+      "norm_roe": 0.6465710777882961,
+      "norm_debt_to_equity": 0.6442920320331965,
+      "norm_earnings_growth": 0.5328372205963124,
+      "norm_dividend_yield": 0.4930223587231688
+    },
+    "explanation": "INTC scored 0.55 (tech: 0.58, fund: 0.51). Top factors: norm_moving_avg_cross (0.81), norm_price_momentum (0.76), norm_roe (0.65), norm_debt_to_equity (0.64), norm_pe_ratio (0.62)"
+  },
+  "TSLA": {
+    "composite_score": 0.5522065931791126,
+    "tech_score": 0.5207510815389134,
+    "fund_score": 0.5993898606394115,
+    "contributions": {
+      "norm_rsi": 0.39032537775034365,
+      "norm_macd_signal": 0.694538638173548,
+      "norm_volume_trend": 0.4627445061834418,
+      "norm_price_momentum": 0.6896845190930295,
+      "norm_moving_avg_cross": 0.27597128500573626,
+      "norm_bollinger_position": 0.7000196292428679,
+      "norm_pe_ratio": 0.40962739027095546,
+      "norm_pb_ratio": 0.6715379325337937,
+      "norm_roe": 0.6870317530598681,
+      "norm_debt_to_equity": 0.39941755776647114,
+      "norm_earnings_growth": 0.7154747141986594,
+      "norm_dividend_yield": 0.6771247401041771
+    },
+    "explanation": "TSLA scored 0.55 (tech: 0.52, fund: 0.60). Top factors: norm_earnings_growth (0.72), norm_bollinger_position (0.70), norm_macd_signal (0.69), norm_price_momentum (0.69), norm_roe (0.69)"
+  },
+  "MA": {
+    "composite_score": 0.5444603714833205,
+    "tech_score": 0.5696434951266438,
+    "fund_score": 0.5066856860183356,
+    "contributions": {
+      "norm_rsi": 0.7527385419884567,
+      "norm_macd_signal": 0.3942717943788782,
+      "norm_volume_trend": 0.47141891966908817,
+      "norm_price_momentum": 0.580851444387318,
+      "norm_moving_avg_cross": 0.49093806997267814,
+      "norm_bollinger_position": 0.7112323564939139,
+      "norm_pe_ratio": 0.4572586362279681,
+      "norm_pb_ratio": 0.5682657558744445,
+      "norm_roe": 0.6039808932919045,
+      "norm_debt_to_equity": 0.5377262886023068,
+      "norm_earnings_growth": 0.38772797910403667,
+      "norm_dividend_yield": 0.5794377622285402
+    },
+    "explanation": "MA scored 0.54 (tech: 0.57, fund: 0.51). Top factors: norm_rsi (0.75), norm_bollinger_position (0.71), norm_roe (0.60), norm_price_momentum (0.58), norm_dividend_yield (0.58)"
+  },
+  "LLY": {
+    "composite_score": 0.5396794752814114,
+    "tech_score": 0.5500617585768053,
+    "fund_score": 0.5241060503383204,
+    "contributions": {
+      "norm_rsi": 0.6679829156510877,
+      "norm_macd_signal": 0.6280206008230008,
+      "norm_volume_trend": 0.28925623647051435,
+      "norm_price_momentum": 0.6808260130123319,
+      "norm_moving_avg_cross": 0.37967537395603307,
+      "norm_bollinger_position": 0.5499826598360125,
+      "norm_pe_ratio": 0.6089791434546763,
+      "norm_pb_ratio": 0.2755318415844096,
+      "norm_roe": 0.45065622910489495,
+      "norm_debt_to_equity": 0.25430675820100423,
+      "norm_earnings_growth": 0.5703654727063837,
+      "norm_dividend_yield": 0.30140559442864995
+    },
+    "explanation": "LLY scored 0.54 (tech: 0.55, fund: 0.52). Top factors: norm_price_momentum (0.68), norm_rsi (0.67), norm_macd_signal (0.63), norm_pe_ratio (0.61), norm_earnings_growth (0.57)"
+  },
+  "NKE": {
+    "composite_score": 0.5271057247281171,
+    "tech_score": 0.4675905742689227,
+    "fund_score": 0.6163784504169088,
+    "contributions": {
+      "norm_rsi": 0.5899509200064039,
+      "norm_macd_signal": 0.2769437302030195,
+      "norm_volume_trend": 0.6495780274127484,
+      "norm_price_momentum": 0.5504794235392124,
+      "norm_moving_avg_cross": 0.37816365254276346,
+      "norm_bollinger_position": 0.2798093270250915,
+      "norm_pe_ratio": 0.22243326280353493,
+      "norm_pb_ratio": 0.27708480664695617,
+      "norm_roe": 0.6465710777882961,
+      "norm_debt_to_equity": 0.6442920320331965,
+      "norm_earnings_growth": 0.4002373964740604,
+      "norm_dividend_yield": 0.7084346689104711
+    },
+    "explanation": "NKE scored 0.53 (tech: 0.47, fund: 0.62). Top factors: norm_dividend_yield (0.71), norm_volume_trend (0.65), norm_roe (0.65), norm_debt_to_equity (0.64), norm_rsi (0.59)"
+  },
+  "UNH": {
+    "composite_score": 0.5256028336610216,
+    "tech_score": 0.535203026021505,
+    "fund_score": 0.5112025451202963,
+    "contributions": {
+      "norm_rsi": 0.33748332244726886,
+      "norm_macd_signal": 0.550331162485192,
+      "norm_volume_trend": 0.5801827195275774,
+      "norm_price_momentum": 0.6517194930328976,
+      "norm_moving_avg_cross": 0.6493664740833358,
+      "norm_bollinger_position": 0.5857565991607788,
+      "norm_pe_ratio": 0.7117360621801198,
+      "norm_pb_ratio": 0.6365962186264952,
+      "norm_roe": 0.6998088084087856,
+      "norm_debt_to_equity": 0.18628607090469163,
+      "norm_earnings_growth": 0.435263765110127,
+      "norm_dividend_yield": 0.5731757764672812
+    },
+    "explanation": "UNH scored 0.53 (tech: 0.54, fund: 0.51). Top factors: norm_pe_ratio (0.71), norm_roe (0.70), norm_price_momentum (0.65), norm_moving_avg_cross (0.65), norm_pb_ratio (0.64)"
+  },
+  "AAPL": {
+    "composite_score": 0.5241126047173135,
+    "tech_score": 0.587846341556433,
+    "fund_score": 0.4285119994586341,
+    "contributions": {
+      "norm_rsi": 0.3673135149570692,
+      "norm_macd_signal": 0.729073578281377,
+      "norm_volume_trend": 0.7136352346913677,
+      "norm_price_momentum": 0.6922155208303716,
+      "norm_moving_avg_cross": 0.540824876610576,
+      "norm_bollinger_position": 0.58201902341043,
+      "norm_pe_ratio": 0.33351732243055404,
+      "norm_pb_ratio": 0.4851821250282012,
+      "norm_roe": 0.32288567561572024,
+      "norm_debt_to_equity": 0.6692329507085111,
+      "norm_earnings_growth": 0.2538772132447824,
+      "norm_dividend_yield": 0.3239487431691816
+    },
+    "explanation": "AAPL scored 0.52 (tech: 0.59, fund: 0.43). Top factors: norm_macd_signal (0.73), norm_volume_trend (0.71), norm_price_momentum (0.69), norm_debt_to_equity (0.67), norm_bollinger_position (0.58)"
+  },
+  "BA": {
+    "composite_score": 0.5136962081185908,
+    "tech_score": 0.4959124073743722,
+    "fund_score": 0.5403719092349188,
+    "contributions": {
+      "norm_rsi": 0.4739446158016251,
+      "norm_macd_signal": 0.6090802560019583,
+      "norm_volume_trend": 0.5661702054353793,
+      "norm_price_momentum": 0.3138307610977235,
+      "norm_moving_avg_cross": 0.6539016383231447,
+      "norm_bollinger_position": 0.2552481149513714,
+      "norm_pe_ratio": 0.3606638017696906,
+      "norm_pb_ratio": 0.5007117756536672,
+      "norm_roe": 0.2121511959251022,
+      "norm_debt_to_equity": 0.3064559517948439,
+      "norm_earnings_growth": 0.7617595584677472,
+      "norm_dividend_yield": 0.44918845839435734
+    },
+    "explanation": "BA scored 0.51 (tech: 0.50, fund: 0.54). Top factors: norm_earnings_growth (0.76), norm_moving_avg_cross (0.65), norm_macd_signal (0.61), norm_volume_trend (0.57), norm_pb_ratio (0.50)"
+  },
+  "TMO": {
+    "composite_score": 0.5077244098857148,
+    "tech_score": 0.532064745439802,
+    "fund_score": 0.4712139065545839,
+    "contributions": {
+      "norm_rsi": 0.38928368848809664,
+      "norm_macd_signal": 0.6888111686318555,
+      "norm_volume_trend": 0.5388124398268024,
+      "norm_price_momentum": 0.621347472184792,
+      "norm_moving_avg_cross": 0.3231369930997488,
+      "norm_bollinger_position": 0.7448705382470524,
+      "norm_pe_ratio": 0.6068140868202666,
+      "norm_pb_ratio": 0.6397021487515884,
+      "norm_roe": 0.6870317530598681,
+      "norm_debt_to_equity": 0.7100453630862988,
+      "norm_earnings_growth": 0.6554295108225453,
+      "norm_dividend_yield": 0.3965877779997835
+    },
+    "explanation": "TMO scored 0.51 (tech: 0.53, fund: 0.47). Top factors: norm_bollinger_position (0.74), norm_debt_to_equity (0.71), norm_macd_signal (0.69), norm_roe (0.69), norm_earnings_growth (0.66)"
+  },
+  "WMT": {
+    "composite_score": 0.5041278964744281,
+    "tech_score": 0.45228578819411114,
+    "fund_score": 0.5818910588949036,
+    "contributions": {
+      "norm_rsi": 0.4365385013845739,
+      "norm_macd_signal": 0.24331611200278544,
+      "norm_volume_trend": 0.42337601421012366,
+      "norm_price_momentum": 0.4720183696816065,
+      "norm_moving_avg_cross": 0.5638030420922745,
+      "norm_bollinger_position": 0.7560832654980985,
+      "norm_pe_ratio": 0.2960451883734636,
+      "norm_pb_ratio": 0.46033468402745553,
+      "norm_roe": 0.6508300962379353,
+      "norm_debt_to_equity": 0.39941755776647114,
+      "norm_earnings_growth": 0.4277581146881127,
+      "norm_dividend_yield": 0.4053545580655458
+    },
+    "explanation": "WMT scored 0.50 (tech: 0.45, fund: 0.58). Top factors: norm_bollinger_position (0.76), norm_roe (0.65), norm_moving_avg_cross (0.56), norm_price_momentum (0.47), norm_pb_ratio (0.46)"
+  },
+  "V": {
+    "composite_score": 0.4979922629137788,
+    "tech_score": 0.46874758075260675,
+    "fund_score": 0.5418592861555368,
+    "contributions": {
+      "norm_rsi": 0.7796330647591972,
+      "norm_macd_signal": 0.23889291770326052,
+      "norm_volume_trend": 0.2692383591959458,
+      "norm_price_momentum": 0.5188419018224358,
+      "norm_moving_avg_cross": 0.33311435442732834,
+      "norm_bollinger_position": 0.5788153870529883,
+      "norm_pe_ratio": 0.2222667199855034,
+      "norm_pb_ratio": 0.6629966246897875,
+      "norm_roe": 0.33566273096463767,
+      "norm_debt_to_equity": 0.29738652682200223,
+      "norm_earnings_growth": 0.4903052015382316,
+      "norm_dividend_yield": 0.5080511245501899
+    },
+    "explanation": "V scored 0.50 (tech: 0.47, fund: 0.54). Top factors: norm_rsi (0.78), norm_pb_ratio (0.66), norm_bollinger_position (0.58), norm_price_momentum (0.52), norm_dividend_yield (0.51)"
+  },
+  "MSFT": {
+    "composite_score": 0.49631954195889405,
+    "tech_score": 0.47386289701898066,
+    "fund_score": 0.5300045093687641,
+    "contributions": {
+      "norm_rsi": 0.4077499981370207,
+      "norm_macd_signal": 0.6420840903907209,
+      "norm_volume_trend": 0.40402539951137406,
+      "norm_price_momentum": 0.6175509695787788,
+      "norm_moving_avg_cross": 0.4238176392235064,
+      "norm_bollinger_position": 0.26699478159532447,
+      "norm_pe_ratio": 0.27256265103102034,
+      "norm_pb_ratio": 0.7453037730047575,
+      "norm_roe": 0.6337940224393787,
+      "norm_debt_to_equity": 0.6193511133578818,
+      "norm_earnings_growth": 0.6028899578684455,
+      "norm_dividend_yield": 0.3565110691277273
+    },
+    "explanation": "MSFT scored 0.50 (tech: 0.47, fund: 0.53). Top factors: norm_pb_ratio (0.75), norm_macd_signal (0.64), norm_roe (0.63), norm_debt_to_equity (0.62), norm_price_momentum (0.62)"
+  },
+  "DIS": {
+    "composite_score": 0.49452075713159316,
+    "tech_score": 0.5055380228279268,
+    "fund_score": 0.4779948585870927,
+    "contributions": {
+      "norm_rsi": 0.318732915726823,
+      "norm_macd_signal": 0.5080272785435822,
+      "norm_volume_trend": 0.7229769107528331,
+      "norm_price_momentum": 0.5137798983477516,
+      "norm_moving_avg_cross": 0.5148232683023384,
+      "norm_bollinger_position": 0.6151232657706615,
+      "norm_pe_ratio": 0.6294639100725524,
+      "norm_pb_ratio": 0.6063133999068364,
+      "norm_roe": 0.45704475677935363,
+      "norm_debt_to_equity": 0.50144858871094,
+      "norm_earnings_growth": 0.7955349853668116,
+      "norm_dividend_yield": 0.40785935237004933
+    },
+    "explanation": "DIS scored 0.49 (tech: 0.51, fund: 0.48). Top factors: norm_earnings_growth (0.80), norm_volume_trend (0.72), norm_pe_ratio (0.63), norm_bollinger_position (0.62), norm_pb_ratio (0.61)"
+  },
+  "PFE": {
+    "composite_score": 0.4925627178218448,
+    "tech_score": 0.5296531469723091,
+    "fund_score": 0.43692707409614817,
+    "contributions": {
+      "norm_rsi": 0.6361640436406341,
+      "norm_macd_signal": 0.5974551940608993,
+      "norm_volume_trend": 0.34463903026348736,
+      "norm_price_momentum": 0.6820915138810032,
+      "norm_moving_avg_cross": 0.47582085583998185,
+      "norm_bollinger_position": 0.2573838725229992,
+      "norm_pe_ratio": 0.6694341864001155,
+      "norm_pb_ratio": 0.27087294639676973,
+      "norm_roe": 0.21002168670028262,
+      "norm_debt_to_equity": 0.3767439953343669,
+      "norm_earnings_growth": 0.26638663061480616,
+      "norm_dividend_yield": 0.6946583002357017
+    },
+    "explanation": "PFE scored 0.49 (tech: 0.53, fund: 0.44). Top factors: norm_dividend_yield (0.69), norm_price_momentum (0.68), norm_pe_ratio (0.67), norm_rsi (0.64), norm_macd_signal (0.60)"
+  },
+  "C": {
+    "composite_score": 0.4863051363778226,
+    "tech_score": 0.5000674225366901,
+    "fund_score": 0.4656617071395212,
+    "contributions": {
+      "norm_rsi": 0.7288743879806167,
+      "norm_macd_signal": 0.1909749794584076,
+      "norm_volume_trend": 0.6902810445377044,
+      "norm_price_momentum": 0.19993568291732775,
+      "norm_moving_avg_cross": 0.6747633938262657,
+      "norm_bollinger_position": 0.44906811457659734,
+      "norm_pe_ratio": 0.6910847527442122,
+      "norm_pb_ratio": 0.7794690043807827,
+      "norm_roe": 0.6508300962379353,
+      "norm_debt_to_equity": 0.42662583268499615,
+      "norm_earnings_growth": 0.5516013466513481,
+      "norm_dividend_yield": 0.564408996401519
+    },
+    "explanation": "C scored 0.49 (tech: 0.50, fund: 0.47). Top factors: norm_pb_ratio (0.78), norm_rsi (0.73), norm_pe_ratio (0.69), norm_volume_trend (0.69), norm_moving_avg_cross (0.67)"
+  },
+  "ABBV": {
+    "composite_score": 0.48477875502629997,
+    "tech_score": 0.5355929534805439,
+    "fund_score": 0.40855745734493404,
+    "contributions": {
+      "norm_rsi": 0.6870174194430555,
+      "norm_macd_signal": 0.6944819305543234,
+      "norm_volume_trend": 0.2071829396447832,
+      "norm_price_momentum": 0.5884444495993444,
+      "norm_moving_avg_cross": 0.3334166987099823,
+      "norm_bollinger_position": 0.5558559931579891,
+      "norm_pe_ratio": 0.41912033089875167,
+      "norm_pb_ratio": 0.7064796464410924,
+      "norm_roe": 0.46556279367863196,
+      "norm_debt_to_equity": 0.614816400871461,
+      "norm_earnings_growth": 0.2000867185536802,
+      "norm_dividend_yield": 0.38406380647726596
+    },
+    "explanation": "ABBV scored 0.48 (tech: 0.54, fund: 0.41). Top factors: norm_pb_ratio (0.71), norm_macd_signal (0.69), norm_rsi (0.69), norm_debt_to_equity (0.61), norm_price_momentum (0.59)"
+  },
+  "WFC": {
+    "composite_score": 0.47950104054978526,
+    "tech_score": 0.5166205717244585,
+    "fund_score": 0.4238217437877754,
+    "contributions": {
+      "norm_rsi": 0.6141938701096066,
+      "norm_macd_signal": 0.2773973911568169,
+      "norm_volume_trend": 0.6829411562036959,
+      "norm_price_momentum": 0.4150708305914086,
+      "norm_moving_avg_cross": 0.627597685732253,
+      "norm_bollinger_position": 0.4875117508658984,
+      "norm_pe_ratio": 0.4635872633131655,
+      "norm_pb_ratio": 0.4463579984645361,
+      "norm_roe": 0.4144545722829622,
+      "norm_debt_to_equity": 0.7009759381134572,
+      "norm_earnings_growth": 0.2676375723518085,
+      "norm_dividend_yield": 0.38782099793402125
+    },
+    "explanation": "WFC scored 0.48 (tech: 0.52, fund: 0.42). Top factors: norm_debt_to_equity (0.70), norm_volume_trend (0.68), norm_moving_avg_cross (0.63), norm_rsi (0.61), norm_bollinger_position (0.49)"
+  },
+  "COP": {
+    "composite_score": 0.4756314738711361,
+    "tech_score": 0.4211773731260363,
+    "fund_score": 0.5573126249887858,
+    "contributions": {
+      "norm_rsi": 0.6208228017784512,
+      "norm_macd_signal": 0.5896295426078938,
+      "norm_volume_trend": 0.2852526610156006,
+      "norm_price_momentum": 0.25814872287619667,
+      "norm_moving_avg_cross": 0.25631890663323104,
+      "norm_bollinger_position": 0.2808772058109054,
+      "norm_pe_ratio": 0.5373657317011258,
+      "norm_pb_ratio": 0.29261445727242225,
+      "norm_roe": 0.4187135907326012,
+      "norm_debt_to_equity": 0.5921428384393569,
+      "norm_earnings_growth": 0.7217294228836714,
+      "norm_dividend_yield": 0.8236552069176328
+    },
+    "explanation": "COP scored 0.48 (tech: 0.42, fund: 0.56). Top factors: norm_dividend_yield (0.82), norm_earnings_growth (0.72), norm_rsi (0.62), norm_debt_to_equity (0.59), norm_macd_signal (0.59)"
+  },
+  "MS": {
+    "composite_score": 0.475115856879726,
+    "tech_score": 0.4895663617767725,
+    "fund_score": 0.4534400995341563,
+    "contributions": {
+      "norm_rsi": 0.30556975141297466,
+      "norm_macd_signal": 0.5296328814681844,
+      "norm_volume_trend": 0.20251210161405064,
+      "norm_price_momentum": 0.5428864183271861,
+      "norm_moving_avg_cross": 0.8059808124980697,
+      "norm_bollinger_position": 0.7454044776399593,
+      "norm_pe_ratio": 0.3556675172287452,
+      "norm_pb_ratio": 0.7018207512534526,
+      "norm_roe": 0.4825988674771886,
+      "norm_debt_to_equity": 0.6284205383307235,
+      "norm_earnings_growth": 0.40148833821106283,
+      "norm_dividend_yield": 0.3515014805187202
+    },
+    "explanation": "MS scored 0.48 (tech: 0.49, fund: 0.45). Top factors: norm_moving_avg_cross (0.81), norm_bollinger_position (0.75), norm_pb_ratio (0.70), norm_debt_to_equity (0.63), norm_price_momentum (0.54)"
+  },
+  "BAC": {
+    "composite_score": 0.47306420479877265,
+    "tech_score": 0.5219824687449284,
+    "fund_score": 0.3996868088795391,
+    "contributions": {
+      "norm_rsi": 0.6135309769427222,
+      "norm_macd_signal": 0.23344898625769148,
+      "norm_volume_trend": 0.7036262960540834,
+      "norm_price_momentum": 0.3910263140866584,
+      "norm_moving_avg_cross": 0.6605532125415311,
+      "norm_bollinger_position": 0.5862905385536857,
+      "norm_pe_ratio": 0.695248323195,
+      "norm_pb_ratio": 0.8027634803189819,
+      "norm_roe": 0.5422251257721368,
+      "norm_debt_to_equity": 0.3790113515775773,
+      "norm_earnings_growth": 0.31517335835789884,
+      "norm_dividend_yield": 0.45044085554660906
+    },
+    "explanation": "BAC scored 0.47 (tech: 0.52, fund: 0.40). Top factors: norm_pb_ratio (0.80), norm_volume_trend (0.70), norm_pe_ratio (0.70), norm_moving_avg_cross (0.66), norm_rsi (0.61)"
+  },
+  "AMD": {
+    "composite_score": 0.4704636720967117,
+    "tech_score": 0.5038511607432063,
+    "fund_score": 0.4203824391269697,
+    "contributions": {
+      "norm_rsi": 0.33653633220886253,
+      "norm_macd_signal": 0.6963532819887378,
+      "norm_volume_trend": 0.502780260732579,
+      "norm_price_momentum": 0.7263840442844903,
+      "norm_moving_avg_cross": 0.24392279104442002,
+      "norm_bollinger_position": 0.594833568840197,
+      "norm_pe_ratio": 0.38597831011048056,
+      "norm_pb_ratio": 0.5884543016875504,
+      "norm_roe": 0.19511512212654555,
+      "norm_debt_to_equity": 0.6805697319245633,
+      "norm_earnings_growth": 0.5278334536483028,
+      "norm_dividend_yield": 0.39032579223852476
+    },
+    "explanation": "AMD scored 0.47 (tech: 0.50, fund: 0.42). Top factors: norm_price_momentum (0.73), norm_macd_signal (0.70), norm_debt_to_equity (0.68), norm_bollinger_position (0.59), norm_pb_ratio (0.59)"
+  },
+  "NVDA": {
+    "composite_score": 0.4662708031584306,
+    "tech_score": 0.5178880090222456,
+    "fund_score": 0.3888449943627082,
+    "contributions": {
+      "norm_rsi": 0.3068008387229029,
+      "norm_macd_signal": 0.6466774075479198,
+      "norm_volume_trend": 0.6188839489250766,
+      "norm_price_momentum": 0.6251439747908052,
+      "norm_moving_avg_cross": 0.4939615127992174,
+      "norm_bollinger_position": 0.5115390235467115,
+      "norm_pe_ratio": 0.746543511148706,
+      "norm_pb_ratio": 0.3112500380229815,
+      "norm_roe": 0.1780790483279889,
+      "norm_debt_to_equity": 0.5059833011973609,
+      "norm_earnings_growth": 0.5078183858562649,
+      "norm_dividend_yield": 0.36277305488898604
+    },
+    "explanation": "NVDA scored 0.47 (tech: 0.52, fund: 0.39). Top factors: norm_pe_ratio (0.75), norm_macd_signal (0.65), norm_price_momentum (0.63), norm_volume_trend (0.62), norm_bollinger_position (0.51)"
+  },
+  "META": {
+    "composite_score": 0.4649170660304483,
+    "tech_score": 0.4185077428989247,
+    "fund_score": 0.5345310507277337,
+    "contributions": {
+      "norm_rsi": 0.412579648352893,
+      "norm_macd_signal": 0.32293360939423327,
+      "norm_volume_trend": 0.5314725514927939,
+      "norm_price_momentum": 0.36318529497589497,
+      "norm_moving_avg_cross": 0.392373833827498,
+      "norm_bollinger_position": 0.5772135688742674,
+      "norm_pe_ratio": 0.6394564791544431,
+      "norm_pb_ratio": 0.2964968699287887,
+      "norm_roe": 0.6849022438350486,
+      "norm_debt_to_equity": 0.5672019197640422,
+      "norm_earnings_growth": 0.6654370447185644,
+      "norm_dividend_yield": 0.37153983495474835
+    },
+    "explanation": "META scored 0.46 (tech: 0.42, fund: 0.53). Top factors: norm_roe (0.68), norm_earnings_growth (0.67), norm_pe_ratio (0.64), norm_bollinger_position (0.58), norm_debt_to_equity (0.57)"
+  },
+  "XOM": {
+    "composite_score": 0.4629350774877363,
+    "tech_score": 0.5142462634353128,
+    "fund_score": 0.3859682985663716,
+    "contributions": {
+      "norm_rsi": 0.5452529807536237,
+      "norm_macd_signal": 0.5554915558346377,
+      "norm_volume_trend": 0.6489107648369294,
+      "norm_price_momentum": 0.6972775243050559,
+      "norm_moving_avg_cross": 0.23727121682603358,
+      "norm_bollinger_position": 0.2931578118477654,
+      "norm_pe_ratio": 0.7232275166242942,
+      "norm_pb_ratio": 0.47508785212164834,
+      "norm_roe": 0.3186266571660811,
+      "norm_debt_to_equity": 0.7145800755727195,
+      "norm_earnings_growth": 0.4302599981621175,
+      "norm_dividend_yield": 0.6696103571906665
+    },
+    "explanation": "XOM scored 0.46 (tech: 0.51, fund: 0.39). Top factors: norm_pe_ratio (0.72), norm_debt_to_equity (0.71), norm_price_momentum (0.70), norm_dividend_yield (0.67), norm_volume_trend (0.65)"
+  },
+  "MCD": {
+    "composite_score": 0.45859957405433643,
+    "tech_score": 0.37424165783017715,
+    "fund_score": 0.5851364483905753,
+    "contributions": {
+      "norm_rsi": 0.2774441413323058,
+      "norm_macd_signal": 0.1886499670701959,
+      "norm_volume_trend": 0.708964396660635,
+      "norm_price_momentum": 0.3581232915012107,
+      "norm_moving_avg_cross": 0.4821700857757143,
+      "norm_bollinger_position": 0.34761962992427525,
+      "norm_pe_ratio": 0.6969137513753151,
+      "norm_pb_ratio": 0.4471344809958094,
+      "norm_roe": 0.6785137161605898,
+      "norm_debt_to_equity": 0.204424920850375,
+      "norm_earnings_growth": 0.7479991993607212,
+      "norm_dividend_yield": 0.5919617337510577
+    },
+    "explanation": "MCD scored 0.46 (tech: 0.37, fund: 0.59). Top factors: norm_earnings_growth (0.75), norm_volume_trend (0.71), norm_pe_ratio (0.70), norm_roe (0.68), norm_dividend_yield (0.59)"
+  },
+  "UPS": {
+    "composite_score": 0.45553781302419405,
+    "tech_score": 0.3707931339927533,
+    "fund_score": 0.5826548315713551,
+    "contributions": {
+      "norm_rsi": 0.3323695751598746,
+      "norm_macd_signal": 0.6673189809457026,
+      "norm_volume_trend": 0.24655143161810142,
+      "norm_price_momentum": 0.23157320463410433,
+      "norm_moving_avg_cross": 0.2877627120292394,
+      "norm_bollinger_position": 0.3935384177142736,
+      "norm_pe_ratio": 0.6076468009104242,
+      "norm_pb_ratio": 0.297273352460062,
+      "norm_roe": 0.697679299183966,
+      "norm_debt_to_equity": 0.24296997698495215,
+      "norm_earnings_growth": 0.34394501830895347,
+      "norm_dividend_yield": 0.7447541863257721
+    },
+    "explanation": "UPS scored 0.46 (tech: 0.37, fund: 0.58). Top factors: norm_dividend_yield (0.74), norm_roe (0.70), norm_macd_signal (0.67), norm_pe_ratio (0.61), norm_bollinger_position (0.39)"
+  },
+  "COST": {
+    "composite_score": 0.4516189236381164,
+    "tech_score": 0.43765422801392545,
+    "fund_score": 0.47256596707440285,
+    "contributions": {
+      "norm_rsi": 0.6391944124035345,
+      "norm_macd_signal": 0.4969125851755453,
+      "norm_volume_trend": 0.3519789185974958,
+      "norm_price_momentum": 0.19613918031131453,
+      "norm_moving_avg_cross": 0.4437723618786656,
+      "norm_bollinger_position": 0.2968953875981141,
+      "norm_pe_ratio": 0.35533443159268224,
+      "norm_pb_ratio": 0.6808557229090734,
+      "norm_roe": 0.5,
+      "norm_debt_to_equity": 0.614816400871461,
+      "norm_earnings_growth": 0.5040655606452578,
+      "norm_dividend_yield": 0.30140559442864995
+    },
+    "explanation": "COST scored 0.45 (tech: 0.44, fund: 0.47). Top factors: norm_pb_ratio (0.68), norm_rsi (0.64), norm_debt_to_equity (0.61), norm_earnings_growth (0.50), norm_roe (0.50)"
+  },
+  "GOOGL": {
+    "composite_score": 0.44813271211221306,
+    "tech_score": 0.4801895096740313,
+    "fund_score": 0.40004751576948566,
+    "contributions": {
+      "norm_rsi": 0.2835048788581065,
+      "norm_macd_signal": 0.48613813752285645,
+      "norm_volume_trend": 0.6709304298389549,
+      "norm_price_momentum": 0.4049468236420401,
+      "norm_moving_avg_cross": 0.7092306420488134,
+      "norm_bollinger_position": 0.4431947812546208,
+      "norm_pe_ratio": 0.6066475440022351,
+      "norm_pb_ratio": 0.4323813129016167,
+      "norm_roe": 0.29094303724342657,
+      "norm_debt_to_equity": 0.689639156897405,
+      "norm_earnings_growth": 0.5078183858562649,
+      "norm_dividend_yield": 0.3565110691277273
+    },
+    "explanation": "GOOGL scored 0.45 (tech: 0.48, fund: 0.40). Top factors: norm_moving_avg_cross (0.71), norm_debt_to_equity (0.69), norm_volume_trend (0.67), norm_pe_ratio (0.61), norm_earnings_growth (0.51)"
+  },
+  "GS": {
+    "composite_score": 0.4473392089003001,
+    "tech_score": 0.48616129807306185,
+    "fund_score": 0.3891060751411575,
+    "contributions": {
+      "norm_rsi": 0.558700242138994,
+      "norm_macd_signal": 0.6953325448426936,
+      "norm_volume_trend": 0.39201467314663296,
+      "norm_price_momentum": 0.23663520810878858,
+      "norm_moving_avg_cross": 0.39781603091526874,
+      "norm_bollinger_position": 0.5344984174417108,
+      "norm_pe_ratio": 0.6509479335986176,
+      "norm_pb_ratio": 0.4440285508707162,
+      "norm_roe": 0.506023468950204,
+      "norm_debt_to_equity": 0.630687894573934,
+      "norm_earnings_growth": 0.19133012639466354,
+      "norm_dividend_yield": 0.3314631260826922
+    },
+    "explanation": "GS scored 0.45 (tech: 0.49, fund: 0.39). Top factors: norm_macd_signal (0.70), norm_pe_ratio (0.65), norm_debt_to_equity (0.63), norm_rsi (0.56), norm_bollinger_position (0.53)"
+  },
+  "SBUX": {
+    "composite_score": 0.4231123195521543,
+    "tech_score": 0.4000216426448262,
+    "fund_score": 0.45774833491314637,
+    "contributions": {
+      "norm_rsi": 0.2637127828754136,
+      "norm_macd_signal": 0.5781178959052842,
+      "norm_volume_trend": 0.40002182405646036,
+      "norm_price_momentum": 0.2012011837859988,
+      "norm_moving_avg_cross": 0.6868571651324227,
+      "norm_bollinger_position": 0.2525784179868366,
+      "norm_pe_ratio": 0.722894430988231,
+      "norm_pb_ratio": 0.5535125877802519,
+      "norm_roe": 0.5017644505005648,
+      "norm_debt_to_equity": 0.71684743181593,
+      "norm_earnings_growth": 0.6729426951405785,
+      "norm_dividend_yield": 0.7773165122843176
+    },
+    "explanation": "SBUX scored 0.42 (tech: 0.40, fund: 0.46). Top factors: norm_dividend_yield (0.78), norm_pe_ratio (0.72), norm_debt_to_equity (0.72), norm_moving_avg_cross (0.69), norm_earnings_growth (0.67)"
+  },
+  "CVX": {
+    "composite_score": 0.392520033254787,
+    "tech_score": 0.37922767480318664,
+    "fund_score": 0.4124585709321875,
+    "contributions": {
+      "norm_rsi": 0.3829388538907741,
+      "norm_macd_signal": 0.31295306841069,
+      "norm_volume_trend": 0.3639896449622369,
+      "norm_price_momentum": 0.4049468236420401,
+      "norm_moving_avg_cross": 0.29864710620478074,
+      "norm_bollinger_position": 0.607648114269964,
+      "norm_pe_ratio": 0.5033909968226972,
+      "norm_pb_ratio": 0.7561745284425837,
+      "norm_roe": 0.27177745422005034,
+      "norm_debt_to_equity": 0.474240313792415,
+      "norm_earnings_growth": 0.5716164144433861,
+      "norm_dividend_yield": 0.32770593462593683
+    },
+    "explanation": "CVX scored 0.39 (tech: 0.38, fund: 0.41). Top factors: norm_pb_ratio (0.76), norm_bollinger_position (0.61), norm_earnings_growth (0.57), norm_pe_ratio (0.50), norm_debt_to_equity (0.47)"
+  }
+}
