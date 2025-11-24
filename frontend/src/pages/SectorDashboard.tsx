@@ -3,10 +3,21 @@
  */
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Grid,
+  Card,
+  CardContent,
+  CircularProgress,
+  Alert,
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getSectors } from '../services/api';
 import { SectorHeatmap } from '../components/SectorHeatmap';
 import type { SectorSummary } from '../types';
-import './SectorDashboard.css';
 
 export function SectorDashboard() {
   const [sectors, setSectors] = useState<SectorSummary[]>([]);
@@ -33,21 +44,26 @@ export function SectorDashboard() {
 
   if (loading) {
     return (
-      <div className="sector-dashboard">
-        <div className="loading">Loading sectors...</div>
-      </div>
+      <Container maxWidth="lg">
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+          <CircularProgress />
+        </Box>
+      </Container>
     );
   }
 
   if (error) {
     return (
-      <div className="sector-dashboard">
-        <div className="error">
-          <h2>Error</h2>
-          <p>{error}</p>
-          <button onClick={() => navigate('/')}>Go Home</button>
-        </div>
-      </div>
+      <Container maxWidth="lg">
+        <Box sx={{ py: 6 }}>
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error}
+          </Alert>
+          <Button variant="contained" onClick={() => navigate('/')}>
+            Go Home
+          </Button>
+        </Box>
+      </Container>
     );
   }
 
@@ -58,55 +74,131 @@ export function SectorDashboard() {
     .reduce((sum, s, _, arr) => sum + (s.median_pe || 0) / arr.length, 0);
 
   return (
-    <div className="sector-dashboard" data-testid="sector-dashboard">
-      <div className="dashboard-header">
-        <button onClick={() => navigate('/')} className="back-button">
-          ← Home
-        </button>
-        <h1>Sector Dashboard</h1>
-        <p className="dashboard-description">
-          Explore market sectors with aggregated metrics and top performers
-        </p>
-      </div>
+    <Container maxWidth="lg" data-testid="sector-dashboard">
+      <Box sx={{ py: 4 }}>
+        {/* Dashboard Header */}
+        <Box sx={{ mb: 4 }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate('/')}
+            sx={{ mb: 2 }}
+          >
+            Home
+          </Button>
+          <Typography variant="h3" gutterBottom>
+            Sector Dashboard
+          </Typography>
+          <Typography variant="h6" color="text.secondary">
+            Explore market sectors with aggregated metrics and top performers
+          </Typography>
+        </Box>
 
-      <div className="dashboard-stats">
-        <div className="stat-card">
-          <div className="stat-label">Total Sectors</div>
-          <div className="stat-value">{sectors.length}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Total Stocks</div>
-          <div className="stat-value">{totalStocks}</div>
-        </div>
-        <div className="stat-card">
-          <div className="stat-label">Average P/E</div>
-          <div className="stat-value">{avgPE.toFixed(2)}</div>
-        </div>
-      </div>
+        {/* Dashboard Stats */}
+        <Grid container spacing={3} sx={{ mb: 4 }}>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" color="text.secondary" gutterBottom>
+                  Total Sectors
+                </Typography>
+                <Typography variant="h3" color="primary">
+                  {sectors.length}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" color="text.secondary" gutterBottom>
+                  Total Stocks
+                </Typography>
+                <Typography variant="h3" color="primary">
+                  {totalStocks}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+          <Grid size={{ xs: 12, sm: 4 }}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6" color="text.secondary" gutterBottom>
+                  Average P/E
+                </Typography>
+                <Typography variant="h3" color="primary">
+                  {avgPE.toFixed(2)}
+                </Typography>
+              </CardContent>
+            </Card>
+          </Grid>
+        </Grid>
 
-      <div className="legend">
-        <h3>P/E Ratio Color Legend</h3>
-        <div className="legend-items">
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#10b981' }}></div>
-            <span>&lt; 15 (Undervalued)</span>
-          </div>
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#fbbf24' }}></div>
-            <span>15-25 (Fair)</span>
-          </div>
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#f59e0b' }}></div>
-            <span>25-35 (Moderate)</span>
-          </div>
-          <div className="legend-item">
-            <div className="legend-color" style={{ backgroundColor: '#ef4444' }}></div>
-            <span>&gt; 35 (Overvalued)</span>
-          </div>
-        </div>
-      </div>
+        {/* Legend */}
+        <Card sx={{ mb: 4 }}>
+          <CardContent>
+            <Typography variant="h6" gutterBottom>
+              P/E Ratio Color Legend
+            </Typography>
+            <Grid container spacing={2}>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      backgroundColor: '#10b981',
+                      borderRadius: 1,
+                    }}
+                  />
+                  <Typography variant="body2">&lt; 15 (Undervalued)</Typography>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      backgroundColor: '#fbbf24',
+                      borderRadius: 1,
+                    }}
+                  />
+                  <Typography variant="body2">15-25 (Fair)</Typography>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      backgroundColor: '#f59e0b',
+                      borderRadius: 1,
+                    }}
+                  />
+                  <Typography variant="body2">25-35 (Moderate)</Typography>
+                </Box>
+              </Grid>
+              <Grid size={{ xs: 12, sm: 6, md: 3 }}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                  <Box
+                    sx={{
+                      width: 24,
+                      height: 24,
+                      backgroundColor: '#ef4444',
+                      borderRadius: 1,
+                    }}
+                  />
+                  <Typography variant="body2">&gt; 35 (Overvalued)</Typography>
+                </Box>
+              </Grid>
+            </Grid>
+          </CardContent>
+        </Card>
 
-      <SectorHeatmap sectors={sectors} />
-    </div>
+        {/* Sector Heatmap */}
+        <SectorHeatmap sectors={sectors} />
+      </Box>
+    </Container>
   );
 }

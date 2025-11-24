@@ -3,9 +3,9 @@
  */
 import { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
+import { Box, Typography, CircularProgress, Alert, Card, CardContent } from '@mui/material';
 import { getPEDistribution } from '../services/api';
 import type { PEDistribution } from '../types';
-import './PEChart.css';
 
 interface PEChartProps {
   symbol: string;
@@ -34,15 +34,35 @@ export function PEChart({ symbol }: PEChartProps) {
   }, [symbol]);
 
   if (loading) {
-    return <div className="chart-loading">Loading P/E distribution...</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+            <CircularProgress />
+          </Box>
+        </CardContent>
+      </Card>
+    );
   }
 
   if (error) {
-    return <div className="chart-error">Error: {error}</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Alert severity="error">{error}</Alert>
+        </CardContent>
+      </Card>
+    );
   }
 
   if (!data || data.pe_ratios.length === 0) {
-    return <div className="chart-error">No P/E distribution data available</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Alert severity="info">No P/E distribution data available</Alert>
+        </CardContent>
+      </Card>
+    );
   }
 
   // Highlight current stock
@@ -51,42 +71,48 @@ export function PEChart({ symbol }: PEChartProps) {
   );
 
   return (
-    <div className="pe-chart" data-testid="pe-chart">
-      <h3>P/E Ratio Distribution in {data.sector || 'Sector'}</h3>
-      {/* eslint-disable @typescript-eslint/no-explicit-any */}
-      <Plot
-        data={[
-          {
-            x: data.symbols,
-            y: data.pe_ratios,
-            type: 'bar',
-            marker: { color: colors },
-          } as any,
-        ]}
-        layout={{
-          autosize: true,
-          margin: { l: 50, r: 20, t: 20, b: 80 },
-          xaxis: { 
-            title: 'Stock Symbol' as any,
-            tickangle: -45,
-            showgrid: false,
-          },
-          yaxis: { 
-            title: 'P/E Ratio' as any,
-            showgrid: true,
-            gridcolor: '#f0f0f0',
-          },
-          hovermode: 'closest',
-          paper_bgcolor: 'white',
-          plot_bgcolor: 'white',
-        } as any}
-        config={{ 
-          responsive: true,
-          displayModeBar: false,
-        }}
-        style={{ width: '100%', height: '400px' }}
-      />
-      {/* eslint-enable @typescript-eslint/no-explicit-any */}
-    </div>
+    <Card data-testid="pe-chart">
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          P/E Ratio Distribution in {data.sector || 'Sector'}
+        </Typography>
+        <Box>
+          {/* eslint-disable @typescript-eslint/no-explicit-any */}
+          <Plot
+            data={[
+              {
+                x: data.symbols,
+                y: data.pe_ratios,
+                type: 'bar',
+                marker: { color: colors },
+              } as any,
+            ]}
+            layout={{
+              autosize: true,
+              margin: { l: 50, r: 20, t: 20, b: 80 },
+              xaxis: { 
+                title: 'Stock Symbol' as any,
+                tickangle: -45,
+                showgrid: false,
+              },
+              yaxis: { 
+                title: 'P/E Ratio' as any,
+                showgrid: true,
+                gridcolor: '#f0f0f0',
+              },
+              hovermode: 'closest',
+              paper_bgcolor: 'white',
+              plot_bgcolor: 'white',
+            } as any}
+            config={{ 
+              responsive: true,
+              displayModeBar: false,
+            }}
+            style={{ width: '100%', height: '400px' }}
+          />
+          {/* eslint-enable @typescript-eslint/no-explicit-any */}
+        </Box>
+      </CardContent>
+    </Card>
   );
 }

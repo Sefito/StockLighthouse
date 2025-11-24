@@ -2,8 +2,16 @@
  * Sector heatmap component using tiles
  */
 import { useNavigate } from 'react-router-dom';
+import { 
+  Grid,
+  Card, 
+  CardContent, 
+  CardActionArea, 
+  Typography, 
+  Box, 
+  Chip 
+} from '@mui/material';
 import type { SectorSummary } from '../types';
-import './SectorHeatmap.css';
 
 interface SectorHeatmapProps {
   sectors: SectorSummary[];
@@ -28,49 +36,80 @@ export function SectorHeatmap({ sectors }: SectorHeatmapProps) {
   };
 
   return (
-    <div className="sector-heatmap" data-testid="sector-heatmap">
+    <Grid container spacing={3} data-testid="sector-heatmap">
       {sectors.map((sector) => (
-        <div
-          key={sector.sector}
-          className="sector-tile"
-          style={{ 
-            backgroundColor: getPEColor(sector.median_pe),
-            borderColor: getPEColor(sector.median_pe),
-          }}
-          onClick={() => navigate(`/sector/${encodeURIComponent(sector.sector)}`)}
-          data-testid={`sector-tile-${sector.sector}`}
-        >
-          <div className="tile-header">
-            <h3>{sector.sector}</h3>
-            <div className="tile-count">{sector.count} stocks</div>
-          </div>
-          <div className="tile-metrics">
-            <div className="tile-metric">
-              <div className="metric-label">Median P/E</div>
-              <div className="metric-value">
-                {sector.median_pe ? sector.median_pe.toFixed(2) : 'N/A'}
-              </div>
-            </div>
-            <div className="tile-metric">
-              <div className="metric-label">Median Market Cap</div>
-              <div className="metric-value">
-                {formatMarketCap(sector.median_market_cap)}
-              </div>
-            </div>
-            <div className="tile-metric">
-              <div className="metric-label">Weighted P/E</div>
-              <div className="metric-value">
-                {sector.weighted_avg_pe ? sector.weighted_avg_pe.toFixed(2) : 'N/A'}
-              </div>
-            </div>
-          </div>
-          <div className="tile-footer">
-            <div className="top-tickers">
-              Top: {sector.top_tickers.slice(0, 3).map(t => t.symbol).join(', ')}
-            </div>
-          </div>
-        </div>
+        <Grid key={sector.sector} size={{ xs: 12, sm: 6, md: 4 }}>
+          <Card
+            sx={{
+              height: '100%',
+              backgroundColor: getPEColor(sector.median_pe),
+              color: 'white',
+              transition: 'transform 0.2s, box-shadow 0.2s',
+              '&:hover': {
+                transform: 'translateY(-4px)',
+                boxShadow: 6,
+              },
+            }}
+            data-testid={`sector-tile-${sector.sector}`}
+          >
+            <CardActionArea
+              onClick={() => navigate(`/sector/${encodeURIComponent(sector.sector)}`)}
+              sx={{ height: '100%' }}
+            >
+              <CardContent>
+                <Box sx={{ mb: 2 }}>
+                  <Typography variant="h6" component="h3" gutterBottom>
+                    {sector.sector}
+                  </Typography>
+                  <Chip
+                    label={`${sector.count} stocks`}
+                    size="small"
+                    sx={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                      color: 'white',
+                    }}
+                  />
+                </Box>
+
+                <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                      Median P/E
+                    </Typography>
+                    <Typography variant="body1" fontWeight="600">
+                      {sector.median_pe ? sector.median_pe.toFixed(2) : 'N/A'}
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                      Median Market Cap
+                    </Typography>
+                    <Typography variant="body1" fontWeight="600">
+                      {formatMarketCap(sector.median_market_cap)}
+                    </Typography>
+                  </Box>
+
+                  <Box>
+                    <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                      Weighted P/E
+                    </Typography>
+                    <Typography variant="body1" fontWeight="600">
+                      {sector.weighted_avg_pe ? sector.weighted_avg_pe.toFixed(2) : 'N/A'}
+                    </Typography>
+                  </Box>
+                </Box>
+
+                <Box sx={{ mt: 2, pt: 2, borderTop: '1px solid rgba(255, 255, 255, 0.2)' }}>
+                  <Typography variant="caption" sx={{ opacity: 0.9 }}>
+                    Top: {sector.top_tickers.slice(0, 3).map(t => t.symbol).join(', ')}
+                  </Typography>
+                </Box>
+              </CardContent>
+            </CardActionArea>
+          </Card>
+        </Grid>
       ))}
-    </div>
+    </Grid>
   );
 }
