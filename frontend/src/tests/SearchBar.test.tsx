@@ -2,7 +2,8 @@
  * Unit tests for SearchBar component
  */
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import { SearchBar } from '../components/SearchBar';
 import * as api from '../services/api';
@@ -26,7 +27,9 @@ describe('SearchBar', () => {
     
     const input = screen.getByTestId('search-input');
     expect(input).toBeInTheDocument();
-    expect(input).toHaveAttribute('placeholder', expect.stringContaining('Search stocks'));
+    // For MUI Autocomplete, the placeholder is on the input element inside
+    const inputElement = input.querySelector('input');
+    expect(inputElement).toHaveAttribute('placeholder', expect.stringContaining('Search stocks'));
   });
 
   it('displays search results when typing', async () => {
@@ -50,20 +53,21 @@ describe('SearchBar', () => {
 
     mockSearchStocks.mockResolvedValue(mockStocks);
 
+    const user = userEvent.setup();
+    
     render(
       <BrowserRouter>
         <SearchBar />
       </BrowserRouter>
     );
 
-    const input = screen.getByTestId('search-input');
-    fireEvent.change(input, { target: { value: 'AAPL' } });
+    const input = screen.getByTestId('search-input').querySelector('input')!;
+    await user.type(input, 'AAPL');
 
     await waitFor(() => {
-      expect(screen.getByTestId('search-results')).toBeInTheDocument();
+      expect(screen.getByText('AAPL')).toBeInTheDocument();
     });
 
-    expect(screen.getByText('AAPL')).toBeInTheDocument();
     expect(screen.getByText('Technology')).toBeInTheDocument();
   });
 
@@ -74,9 +78,7 @@ describe('SearchBar', () => {
       </BrowserRouter>
     );
 
-    const input = screen.getByTestId('search-input');
-    fireEvent.change(input, { target: { value: '' } });
-
-    expect(screen.queryByTestId('search-results')).not.toBeInTheDocument();
+    // Initially, no results should be displayed
+    expect(screen.queryByText('AAPL')).not.toBeInTheDocument();
   });
 });

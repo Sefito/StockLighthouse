@@ -1,8 +1,17 @@
 /**
  * KPI Table component to display stock metrics
  */
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableRow,
+  Paper,
+  Typography,
+  Box,
+} from '@mui/material';
 import type { Stock } from '../types';
-import './KPITable.css';
 
 interface KPITableProps {
   stock: Stock;
@@ -27,67 +36,65 @@ export function KPITable({ stock }: KPITableProps) {
     return `${(value * 100).toFixed(2)}%`;
   };
 
+  const getChangeColor = (value: number | null) => {
+    if (value === null) return 'text.primary';
+    if (value > 0) return 'success.main';
+    if (value < 0) return 'error.main';
+    return 'text.primary';
+  };
+
+  const rows = [
+    { label: 'Symbol', value: stock.symbol },
+    { 
+      label: 'Current Price', 
+      value: stock.price !== null ? `$${formatNumber(stock.price)}` : 'N/A' 
+    },
+    { 
+      label: 'Previous Close', 
+      value: stock.previous_close !== null ? `$${formatNumber(stock.previous_close)}` : 'N/A' 
+    },
+    { 
+      label: 'Change %', 
+      value: stock.change_pct !== null ? `${formatNumber(stock.change_pct)}%` : 'N/A',
+      color: getChangeColor(stock.change_pct),
+    },
+    { label: 'Market Cap', value: formatMarketCap(stock.market_cap) },
+    { label: 'P/E Ratio', value: formatNumber(stock.pe_ratio) },
+    { label: 'P/B Ratio', value: formatNumber(stock.pb_ratio) },
+    { label: 'Dividend Yield', value: formatPercent(stock.dividend_yield) },
+    { label: 'Sector', value: stock.sector || 'N/A' },
+    { label: 'Industry', value: stock.industry || 'N/A' },
+    { label: 'Exchange', value: stock.exchange || 'N/A' },
+    { label: 'Currency', value: stock.currency || 'N/A' },
+  ];
+
   return (
-    <div className="kpi-table" data-testid="kpi-table">
-      <h2>Key Performance Indicators</h2>
-      <table>
-        <tbody>
-          <tr>
-            <td className="kpi-label">Symbol</td>
-            <td className="kpi-value">{stock.symbol}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Current Price</td>
-            <td className="kpi-value">
-              {stock.price !== null ? `$${formatNumber(stock.price)}` : 'N/A'}
-            </td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Previous Close</td>
-            <td className="kpi-value">
-              {stock.previous_close !== null ? `$${formatNumber(stock.previous_close)}` : 'N/A'}
-            </td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Change %</td>
-            <td className={`kpi-value ${stock.change_pct && stock.change_pct > 0 ? 'positive' : stock.change_pct && stock.change_pct < 0 ? 'negative' : ''}`}>
-              {stock.change_pct !== null ? `${formatNumber(stock.change_pct)}%` : 'N/A'}
-            </td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Market Cap</td>
-            <td className="kpi-value">{formatMarketCap(stock.market_cap)}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">P/E Ratio</td>
-            <td className="kpi-value">{formatNumber(stock.pe_ratio)}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">P/B Ratio</td>
-            <td className="kpi-value">{formatNumber(stock.pb_ratio)}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Dividend Yield</td>
-            <td className="kpi-value">{formatPercent(stock.dividend_yield)}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Sector</td>
-            <td className="kpi-value">{stock.sector || 'N/A'}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Industry</td>
-            <td className="kpi-value">{stock.industry || 'N/A'}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Exchange</td>
-            <td className="kpi-value">{stock.exchange || 'N/A'}</td>
-          </tr>
-          <tr>
-            <td className="kpi-label">Currency</td>
-            <td className="kpi-value">{stock.currency || 'N/A'}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+    <Box data-testid="kpi-table">
+      <Typography variant="h5" gutterBottom sx={{ mb: 2 }}>
+        Key Performance Indicators
+      </Typography>
+      <TableContainer component={Paper} elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
+        <Table>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow key={row.label}>
+                <TableCell component="th" scope="row" sx={{ fontWeight: 600, width: '40%' }}>
+                  {row.label}
+                </TableCell>
+                <TableCell 
+                  align="right"
+                  sx={{ 
+                    color: row.color || 'text.primary',
+                    fontWeight: row.color ? 600 : 400,
+                  }}
+                >
+                  {row.value}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>
   );
 }

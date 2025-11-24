@@ -3,12 +3,21 @@
  */
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Box,
+  Typography,
+  Button,
+  Grid,
+  CircularProgress,
+  Alert,
+} from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { getStockDetails } from '../services/api';
 import { KPITable } from '../components/KPITable';
 import { PriceChart } from '../components/PriceChart';
 import { PEChart } from '../components/PEChart';
 import type { Stock } from '../types';
-import './StockDetailPage.css';
 
 export function StockDetailPage() {
   const { symbol } = useParams<{ symbol: string }>();
@@ -38,57 +47,79 @@ export function StockDetailPage() {
 
   if (loading) {
     return (
-      <div className="stock-detail-page">
-        <div className="loading">Loading stock details...</div>
-      </div>
+      <Container maxWidth="lg">
+        <Box display="flex" justifyContent="center" alignItems="center" minHeight="80vh">
+          <CircularProgress />
+        </Box>
+      </Container>
     );
   }
 
   if (error || !stock) {
     return (
-      <div className="stock-detail-page">
-        <div className="error">
-          <h2>Error</h2>
-          <p>{error || 'Stock not found'}</p>
-          <button onClick={() => navigate('/')}>Go Home</button>
-        </div>
-      </div>
+      <Container maxWidth="lg">
+        <Box sx={{ py: 6 }}>
+          <Alert severity="error" sx={{ mb: 3 }}>
+            {error || 'Stock not found'}
+          </Alert>
+          <Button variant="contained" onClick={() => navigate('/')}>
+            Go Home
+          </Button>
+        </Box>
+      </Container>
     );
   }
 
   return (
-    <div className="stock-detail-page" data-testid="stock-detail-page">
-      <div className="page-header">
-        <button onClick={() => navigate(-1)} className="back-button">
-          ← Back
-        </button>
-        <div className="stock-title">
-          <h1>{stock.symbol}</h1>
-          {stock.industry && <p className="stock-industry">{stock.industry}</p>}
-        </div>
-      </div>
-
-      <div className="content-grid">
-        <div className="kpi-section">
-          <KPITable stock={stock} />
-        </div>
-
-        <div className="charts-section">
-          <PriceChart symbol={stock.symbol} />
-          <PEChart symbol={stock.symbol} />
-        </div>
-      </div>
-
-      {stock.sector && (
-        <div className="sector-link">
-          <button 
-            onClick={() => navigate(`/sector/${encodeURIComponent(stock.sector!)}`)}
-            className="sector-button"
+    <Container maxWidth="lg" data-testid="stock-detail-page">
+      <Box sx={{ py: 4 }}>
+        {/* Page Header */}
+        <Box sx={{ mb: 4 }}>
+          <Button
+            startIcon={<ArrowBackIcon />}
+            onClick={() => navigate(-1)}
+            sx={{ mb: 2 }}
           >
-            View {stock.sector} Sector →
-          </button>
-        </div>
-      )}
-    </div>
+            Back
+          </Button>
+          <Typography variant="h3" gutterBottom>
+            {stock.symbol}
+          </Typography>
+          {stock.industry && (
+            <Typography variant="h6" color="text.secondary">
+              {stock.industry}
+            </Typography>
+          )}
+        </Box>
+
+        {/* Content Grid */}
+        <Grid container spacing={4}>
+          <Grid size={{ xs: 12, md: 5 }}>
+            <KPITable stock={stock} />
+          </Grid>
+
+          <Grid size={{ xs: 12, md: 7 }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+              <PriceChart symbol={stock.symbol} />
+              <PEChart symbol={stock.symbol} />
+            </Box>
+          </Grid>
+        </Grid>
+
+        {/* Sector Link */}
+        {stock.sector && (
+          <Box sx={{ mt: 6, textAlign: 'center' }}>
+            <Button
+              variant="outlined"
+              size="large"
+              onClick={() => navigate(`/sector/${encodeURIComponent(stock.sector!)}`)}
+              sx={{ textTransform: 'none', px: 4 }}
+            >
+              View {stock.sector} Sector →
+            </Button>
+          </Box>
+        )}
+      </Box>
+    </Container>
   );
 }

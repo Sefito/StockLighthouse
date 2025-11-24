@@ -2,11 +2,21 @@
  * Home page with search functionality
  */
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import {
+  Container,
+  Box,
+  Typography,
+  Grid,
+  Card,
+  CardContent,
+  CardActionArea,
+  CircularProgress,
+  Button,
+} from '@mui/material';
 import { SearchBar } from '../components/SearchBar';
 import { searchStocks } from '../services/api';
-import { useNavigate } from 'react-router-dom';
 import type { Stock } from '../types';
-import './HomePage.css';
 
 export function HomePage() {
   const [popularStocks, setPopularStocks] = useState<Stock[]>([]);
@@ -36,61 +46,116 @@ export function HomePage() {
   };
 
   return (
-    <div className="home-page" data-testid="home-page">
-      <div className="hero">
-        <h1>StockLighthouse</h1>
-        <p>Explore stock data and sector analysis</p>
-      </div>
+    <Container maxWidth="lg" data-testid="home-page">
+      <Box sx={{ py: 6 }}>
+        {/* Hero Section */}
+        <Box sx={{ textAlign: 'center', mb: 6 }}>
+          <Typography variant="h1" gutterBottom sx={{ color: 'primary.main' }}>
+            StockLighthouse
+          </Typography>
+          <Typography variant="h6" color="text.secondary" gutterBottom>
+            Explore stock data and sector analysis
+          </Typography>
+        </Box>
 
-      <div className="search-section">
-        <SearchBar />
-      </div>
+        {/* Search Section */}
+        <Box sx={{ mb: 6, maxWidth: '600px', mx: 'auto' }}>
+          <SearchBar />
+        </Box>
 
-      <div className="popular-stocks">
-        <h2>Popular Stocks</h2>
-        {loading ? (
-          <div className="loading">Loading stocks...</div>
-        ) : (
-          <div className="stock-grid" data-testid="stock-list">
-            {popularStocks.map((stock) => (
-              <div
-                key={stock.symbol}
-                className="stock-card"
-                onClick={() => navigate(`/stock/${stock.symbol}`)}
-                data-testid={`stock-card-${stock.symbol}`}
-              >
-                <div className="stock-header">
-                  <h3>{stock.symbol}</h3>
-                  {stock.price && (
-                    <div className="stock-price">${stock.price.toFixed(2)}</div>
-                  )}
-                </div>
-                <div className="stock-info">
-                  {stock.sector && (
-                    <div className="stock-sector">{stock.sector}</div>
-                  )}
-                  {stock.market_cap && (
-                    <div className="stock-market-cap">
-                      {formatMarketCap(stock.market_cap)}
-                    </div>
-                  )}
-                </div>
-                {stock.change_pct !== null && (
-                  <div className={`stock-change ${stock.change_pct >= 0 ? 'positive' : 'negative'}`}>
-                    {stock.change_pct >= 0 ? '+' : ''}{stock.change_pct.toFixed(2)}%
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+        {/* Popular Stocks Section */}
+        <Box sx={{ mb: 6 }}>
+          <Typography variant="h4" gutterBottom sx={{ mb: 3 }}>
+            Popular Stocks
+          </Typography>
+          {loading ? (
+            <Box display="flex" justifyContent="center" py={4}>
+              <CircularProgress />
+            </Box>
+          ) : (
+            <Grid container spacing={3} data-testid="stock-list">
+              {popularStocks.map((stock) => (
+                <Grid key={stock.symbol} size={{ xs: 12, sm: 6, md: 4 }}>
+                  <Card
+                    sx={{
+                      height: '100%',
+                      transition: 'transform 0.2s, box-shadow 0.2s',
+                      '&:hover': {
+                        transform: 'translateY(-4px)',
+                        boxShadow: 6,
+                      },
+                    }}
+                    data-testid={`stock-card-${stock.symbol}`}
+                  >
+                    <CardActionArea
+                      onClick={() => navigate(`/stock/${stock.symbol}`)}
+                      sx={{ height: '100%' }}
+                    >
+                      <CardContent>
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            alignItems: 'center',
+                            mb: 2,
+                          }}
+                        >
+                          <Typography variant="h6" component="h3">
+                            {stock.symbol}
+                          </Typography>
+                          {stock.price && (
+                            <Typography variant="h6" color="primary">
+                              ${stock.price.toFixed(2)}
+                            </Typography>
+                          )}
+                        </Box>
 
-      <div className="quick-links">
-        <button onClick={() => navigate('/sectors')} className="sector-link-btn">
-          View Sector Dashboard →
-        </button>
-      </div>
-    </div>
+                        <Box sx={{ mb: 2 }}>
+                          {stock.sector && (
+                            <Typography variant="body2" color="text.secondary">
+                              {stock.sector}
+                            </Typography>
+                          )}
+                          {stock.market_cap && (
+                            <Typography variant="body2" color="text.secondary">
+                              {formatMarketCap(stock.market_cap)}
+                            </Typography>
+                          )}
+                        </Box>
+
+                        {stock.change_pct !== null && (
+                          <Typography
+                            variant="body2"
+                            fontWeight="600"
+                            sx={{
+                              color: stock.change_pct >= 0 ? 'success.main' : 'error.main',
+                            }}
+                          >
+                            {stock.change_pct >= 0 ? '+' : ''}
+                            {stock.change_pct.toFixed(2)}%
+                          </Typography>
+                        )}
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Grid>
+              ))}
+            </Grid>
+          )}
+        </Box>
+
+        {/* Quick Links Section */}
+        <Box sx={{ textAlign: 'center' }}>
+          <Button
+            variant="contained"
+            size="large"
+            onClick={() => navigate('/sectors')}
+            sx={{ textTransform: 'none', px: 4 }}
+          >
+            View Sector Dashboard →
+          </Button>
+        </Box>
+      </Box>
+    </Container>
   );
 }

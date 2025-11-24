@@ -1,25 +1,22 @@
 /**
  * Search bar component with auto-suggest
  */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Autocomplete, TextField, Box, Typography, CircularProgress } from '@mui/material';
 import { searchStocks } from '../services/api';
 import type { Stock } from '../types';
-import './SearchBar.css';
 
 export function SearchBar() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<Stock[]>([]);
-  const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const fetchResults = async () => {
       if (query.length === 0) {
         setResults([]);
-        setIsOpen(false);
         return;
       }
 
@@ -27,7 +24,6 @@ export function SearchBar() {
       try {
         const stocks = await searchStocks(query);
         setResults(stocks);
-        setIsOpen(stocks.length > 0);
       } catch (error) {
         console.error('Search failed:', error);
         setResults([]);
@@ -40,70 +36,67 @@ export function SearchBar() {
     return () => clearTimeout(debounce);
   }, [query]);
 
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, []);
-
-  const handleSelect = (symbol: string) => {
-    setQuery('');
-    setIsOpen(false);
-    navigate(`/stock/${symbol}`);
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (results.length > 0) {
-      handleSelect(results[0].symbol);
+  const handleSelect = (_event: React.SyntheticEvent, value: string | Stock | null) => {
+    if (value && typeof value !== 'string') {
+      setQuery('');
+      navigate(`/stock/${value.symbol}`);
     }
   };
 
   return (
-    <div className="search-bar" ref={dropdownRef}>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          className="search-input"
-          placeholder="Search stocks by symbol, sector, or industry..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          data-testid="search-input"
-        />
-      </form>
-
-      {isOpen && (
-        <div className="search-results" data-testid="search-results">
-          {loading ? (
-            <div className="search-result-item loading">Searching...</div>
-          ) : (
-            results.map((stock) => (
-              <div
-                key={stock.symbol}
-                className="search-result-item"
-                onClick={() => handleSelect(stock.symbol)}
-                data-testid={`search-result-${stock.symbol}`}
-              >
-                <div className="result-symbol">{stock.symbol}</div>
-                <div className="result-info">
-                  {stock.sector && <span className="result-sector">{stock.sector}</span>}
-                  {stock.price && (
-                    <span className="result-price">
-                      ${stock.price.toFixed(2)}
-                    </span>
-                  )}
-                </div>
-              </div>
-            ))
-          )}
-        </div>
+    <Autocomplete
+      freeSolo
+      options={results}
+      loading={loading}
+      inputValue={query}
+      onInputChange={(_event, newValue) => setQuery(newValue)}
+      onChange={handleSelect}
+      getOptionLabel={(option) => typeof option === 'string' ? option : option.symbol}
+      renderOption={(props, option) => (
+        <Box
+          component="li"
+          {...props}
+          key={option.symbol}
+          data-testid={`search-result-${option.symbol}`}
+        >
+          <Box sx={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+            <Typography variant="body1" fontWeight="600">
+              {option.symbol}
+            </Typography>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 0.5 }}>
+              {option.sector && (
+                <Typography variant="body2" color="text.secondary">
+                  {option.sector}
+                </Typography>
+              )}
+              {option.price && (
+                <Typography variant="body2" color="primary">
+                  ${option.price.toFixed(2)}
+                </Typography>
+              )}
+            </Box>
+          </Box>
+        </Box>
       )}
-    </div>
+      renderInput={(params) => (
+        <TextField
+          {...params}
+          placeholder="Search stocks by symbol, sector, or industry..."
+          variant="outlined"
+          fullWidth
+          data-testid="search-input"
+          InputProps={{
+            ...params.InputProps,
+            endAdornment: (
+              <>
+                {loading ? <CircularProgress color="inherit" size={20} /> : null}
+                {params.InputProps.endAdornment}
+              </>
+            ),
+          }}
+        />
+      )}
+      data-testid="search-results"
+    />
   );
 }

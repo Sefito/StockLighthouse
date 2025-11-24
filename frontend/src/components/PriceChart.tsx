@@ -3,9 +3,9 @@
  */
 import { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
+import { Box, Typography, CircularProgress, Alert, Card, CardContent } from '@mui/material';
 import { getStockHistory } from '../services/api';
 import type { HistoryData } from '../types';
-import './PriceChart.css';
 
 interface PriceChartProps {
   symbol: string;
@@ -34,55 +34,81 @@ export function PriceChart({ symbol }: PriceChartProps) {
   }, [symbol]);
 
   if (loading) {
-    return <div className="chart-loading">Loading price history...</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Box display="flex" justifyContent="center" alignItems="center" minHeight="400px">
+            <CircularProgress />
+          </Box>
+        </CardContent>
+      </Card>
+    );
   }
 
   if (error) {
-    return <div className="chart-error">Error: {error}</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Alert severity="error">{error}</Alert>
+        </CardContent>
+      </Card>
+    );
   }
 
   if (!data || data.dates.length === 0) {
-    return <div className="chart-error">No price history available</div>;
+    return (
+      <Card>
+        <CardContent>
+          <Alert severity="info">No price history available</Alert>
+        </CardContent>
+      </Card>
+    );
   }
 
   return (
-    <div className="price-chart" data-testid="price-chart">
-      <h3>Price History (30 Days)</h3>
-      {/* eslint-disable @typescript-eslint/no-explicit-any */}
-      <Plot
-        data={[
-          {
-            x: data.dates,
-            y: data.prices,
-            type: 'scatter',
-            mode: 'lines',
-            line: { color: '#4a90e2', width: 2 },
-          } as any,
-        ]}
-        layout={{
-          autosize: true,
-          margin: { l: 50, r: 20, t: 20, b: 40 },
-          xaxis: { 
-            title: 'Date' as any,
-            showgrid: true,
-            gridcolor: '#f0f0f0',
-          },
-          yaxis: { 
-            title: 'Price ($)' as any,
-            showgrid: true,
-            gridcolor: '#f0f0f0',
-          },
-          hovermode: 'x unified',
-          paper_bgcolor: 'white',
-          plot_bgcolor: 'white',
-        } as any}
-        config={{ 
-          responsive: true,
-          displayModeBar: false,
-        }}
-        style={{ width: '100%', height: '400px' }}
-      />
-      {/* eslint-enable @typescript-eslint/no-explicit-any */}
-    </div>
+    <Card data-testid="price-chart">
+      <CardContent>
+        <Typography variant="h6" gutterBottom>
+          Price History (30 Days)
+        </Typography>
+        <Box>
+          {/* eslint-disable @typescript-eslint/no-explicit-any */}
+          <Plot
+            data={[
+              {
+                x: data.dates,
+                y: data.prices,
+                type: 'scatter',
+                mode: 'lines',
+                line: { color: '#4a90e2', width: 2 },
+              } as any,
+            ]}
+            layout={{
+              autosize: true,
+              margin: { l: 50, r: 20, t: 20, b: 40 },
+              xaxis: { 
+                title: 'Date' as any,
+                showgrid: true,
+                gridcolor: '#f0f0f0',
+              },
+              yaxis: { 
+                title: 'Price ($)' as any,
+                showgrid: true,
+                gridcolor: '#f0f0f0',
+              },
+              hovermode: 'x unified',
+              paper_bgcolor: 'white',
+              plot_bgcolor: 'white',
+            } as any}
+            config={{ 
+              responsive: true,
+              displayModeBar: false,
+            }}
+            style={{ width: '100%', height: '400px' }}
+          />
+          {/* eslint-enable @typescript-eslint/no-explicit-any */}
+        </Box>
+      </CardContent>
+    </Card>
   );
 }
