@@ -7,7 +7,6 @@ with technical and fundamental indicators.
 
 import pandas as pd
 import numpy as np
-from datetime import datetime
 
 # Set seed for reproducibility
 np.random.seed(42)
