@@ -72,7 +72,6 @@ backend/features/
 
 ```bash
 # Run all feature tests
-cd /home/runner/work/StockLighthouse/StockLighthouse
 PYTHONPATH=. pytest tests/indicators_test.py tests/test_normalize_pipeline.py -v
 
 # Run indicator tests only
