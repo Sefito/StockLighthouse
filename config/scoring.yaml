@@ -64,7 +64,6 @@ scoring:
   normalization_method: "zscore"  # Options: "zscore", "minmax"
   handle_outliers: true  # Clip outliers beyond 3 standard deviations
   outlier_threshold: 3.0  # Number of standard deviations
-  min_data_coverage: 0.5  # Minimum fraction of features required (50%)
 
 # Top candidates parameters
 top_candidates:
