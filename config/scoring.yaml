@@ -25,7 +25,6 @@ technical_features:
     direction: positive  # SMA50 > SMA200 is golden cross
   bollinger_position:
     weight: 0.10
-    optimal_range: [0, 0.3]  # Near lower band is good buy signal
 
 # Fundamental indicator weights (within fundamental score)
 fundamental_features:
