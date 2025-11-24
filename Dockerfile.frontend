@@ -4,6 +4,9 @@ WORKDIR /app
 COPY frontend/package.json frontend/package-lock.json* ./ 
 RUN npm ci
 COPY frontend/ ./ 
+# Set API base URL for production build - use localhost:8000 for browser access
+ARG VITE_API_BASE_URL=http://localhost:8000/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
 RUN npm run build
 
 FROM node:18-alpine

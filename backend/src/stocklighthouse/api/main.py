@@ -22,7 +22,7 @@ app = FastAPI(
 # Configure CORS for frontend
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://localhost:3000"],
+    allow_origins=["http://localhost:5173", "http://localhost:3000", "http://127.0.0.1:5173"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -43,8 +43,16 @@ def load_stock_data() -> list[StockKPIs]:
         ValidationError: If JSON data doesn't match StockKPIs schema
         JSONDecodeError: If file contains invalid JSON
     """
-    data_path = Path(__file__).parent.parent.parent.parent.parent / "data" / "normalized" / "normalized_kpis.json"
+    # Use environment variable for data path, default to relative path for Docker
+    data_dir = os.getenv('DATA_DIR', '/app/data')
+    data_path = Path(data_dir) / "normalized" / "normalized_kpis.json"
+    
+    # Fallback to relative path for local development
     if not data_path.exists():
+        data_path = Path(__file__).parent.parent.parent.parent.parent / "data" / "normalized" / "normalized_kpis.json"
+    
+    if not data_path.exists():
+        print(f"Warning: Data file not found at {data_path}")
         return []
     
     with open(data_path, 'r') as f:
