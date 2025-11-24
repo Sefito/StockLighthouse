@@ -36,14 +36,12 @@ fundamental_features:
   pb_ratio:
     weight: 0.15
     direction: negative  # Lower P/B is better
-    max_threshold: 10
   roe:
     weight: 0.20
     direction: positive  # Higher ROE is better
   debt_to_equity:
     weight: 0.15
     direction: negative  # Lower debt is better
-    max_threshold: 3.0
   earnings_growth:
     weight: 0.15
     direction: positive  # Higher growth is better
