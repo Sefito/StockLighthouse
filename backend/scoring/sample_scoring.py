@@ -9,7 +9,7 @@ This module provides baseline scoring functionality including:
 
 import numpy as np
 import pandas as pd
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional
 
 
 def normalize_minmax(values: np.ndarray) -> np.ndarray:
