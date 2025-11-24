@@ -10,7 +10,7 @@ composite_weights:
 technical_features:
   rsi:
     weight: 0.25
-    optimal_range: [30, 70]  # RSI below 30 is oversold (good buy), above 70 is overbought
+    direction: positive  # Higher RSI indicates stronger momentum
   macd_signal:
     weight: 0.20
     direction: positive  # Positive MACD signal is bullish
