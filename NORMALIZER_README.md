@@ -450,7 +450,6 @@ print(f"Average coverage: {coverage['average_coverage']:.2%}")
 Comprehensive test suite for all indicators:
 
 ```bash
-cd /home/runner/work/StockLighthouse/StockLighthouse
 PYTHONPATH=. pytest tests/indicators_test.py -v
 PYTHONPATH=. pytest tests/test_normalize_pipeline.py -v
 ```
