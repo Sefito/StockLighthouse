@@ -13,7 +13,6 @@ Implements various technical indicators including:
 - OBV (On-Balance Volume)
 """
 import pandas as pd
-import numpy as np
 
 
 def sma(series: pd.Series, period: int) -> pd.Series:
