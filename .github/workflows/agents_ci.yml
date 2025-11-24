@@ -47,10 +47,10 @@ jobs:
         working-directory: ./backend
         run: |
           mkdir -p test_artifacts
-          pytest -q -v tests/ --junitxml=test_artifacts/junit.xml || exit_code=$?
-          echo "${exit_code:-0}" > test_artifacts/exit_code.txt
+          pytest -q -v tests/ --junitxml=test_artifacts/junit.xml
 
       - name: Upload backend test artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: backend-test-artifacts
@@ -100,10 +100,10 @@ jobs:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'false'
         run: |
           mkdir -p .test-results
-          npm run e2e || exit_code=$?
-          echo "${exit_code:-0}" > .test-results/exit_code.txt
+          npm run e2e
 
       - name: Upload frontend test artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-artifacts
@@ -134,7 +134,7 @@ jobs:
       - name: Run ESLint
         working-directory: ./frontend
         run: |
-          npm run lint || true
+          npm run lint
 
 # Notes:
 # - Installs backend deps from backend/requirements.txt and sets PYTHONPATH to backend/src so tests can import 'stocklighthouse'.
