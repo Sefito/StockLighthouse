@@ -123,12 +123,12 @@ jobs:
         env:
           PYTHONPATH: ./src
         run: |
-          uvicorn stocklighthouse.api.main:app --host 0.0.0.0 --port 8000 &
+          uvicorn stocklighthouse.api.main:app --host 0.0.0.0 --port 8000 > backend.log 2>&1 &
           echo $! > backend.pid
           # Wait for backend to be ready (60 seconds max: 30 retries * 2 seconds)
           BACKEND_READY=false
           for i in {1..30}; do
-            if curl -s http://localhost:8000/ > /dev/null 2>&1; then
+            if curl -s --fail http://localhost:8000/ > /dev/null 2>&1; then
               echo "Backend is ready"
               BACKEND_READY=true
               break
@@ -138,18 +138,22 @@ jobs:
           done
           if [ "$BACKEND_READY" = false ]; then
             echo "ERROR: Backend failed to start within 60 seconds"
+            if [ -f backend.log ]; then
+              echo "Backend log:"
+              cat backend.log
+            fi
             exit 1
           fi
 
       - name: Start frontend dev server
         working-directory: ./frontend
         run: |
-          npm run dev &
+          npm run dev > frontend.log 2>&1 &
           echo $! > frontend.pid
           # Wait for frontend to be ready (60 seconds max: 30 retries * 2 seconds)
           FRONTEND_READY=false
           for i in {1..30}; do
-            if curl -s http://localhost:5173 > /dev/null 2>&1; then
+            if curl -s --fail http://localhost:5173 > /dev/null 2>&1; then
               echo "Frontend is ready"
               FRONTEND_READY=true
               break
@@ -159,6 +163,10 @@ jobs:
           done
           if [ "$FRONTEND_READY" = false ]; then
             echo "ERROR: Frontend failed to start within 60 seconds"
+            if [ -f frontend.log ]; then
+              echo "Frontend log:"
+              tail -100 frontend.log
+            fi
             exit 1
           fi
 
@@ -190,7 +198,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-artifacts
-          path: frontend/.test-results/
+          path: |
+            frontend/.test-results/
+            backend/backend.log
+            frontend/frontend.log
 
   frontend-lint:
     name: Frontend lint
