@@ -144,6 +144,9 @@ def compute_weighted_score(
         total_weight += weight
     
     # Normalize by actual total weight used
+    # This ensures scores remain in [0, 1] range even when some features are missing
+    # For example, if only 0.7 of the total weight is available, we divide by 0.7
+    # rather than the nominal 1.0, so the final score still spans [0, 1]
     if total_weight > 0:
         score /= total_weight
     

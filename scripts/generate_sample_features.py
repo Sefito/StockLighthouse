@@ -77,8 +77,8 @@ df.loc[strong_fund, 'pe_ratio'] = np.random.uniform(10, 18, strong_fund.sum())  
 df.loc[strong_fund, 'roe'] = np.random.uniform(0.18, 0.30, strong_fund.sum())  # High ROE
 df.loc[strong_fund, 'pb_ratio'] = np.random.uniform(2, 4, strong_fund.sum())  # Reasonable P/B
 
-# Make some stocks fail filters (penny stocks, low volume)
-df.loc[df['symbol'].isin(['PYPL', 'NFLX']), 'price'] = np.random.uniform(2, 4, 2)  # Penny stocks
+# Make some stocks fail filters (low price, low volume)
+df.loc[df['symbol'].isin(['PYPL', 'NFLX']), 'price'] = np.random.uniform(2, 4, 2)  # Test low-price filter
 df.loc[df['symbol'].isin(['SLB', 'GE']), 'avg_volume'] = np.random.uniform(5e4, 8e4, 2)  # Low volume
 
 # Round to reasonable precision

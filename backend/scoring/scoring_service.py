@@ -61,18 +61,25 @@ class ScoringService:
         Lazy initialization of Redis client.
         
         Returns None if Redis is not available (graceful degradation).
+        Uses environment variables REDIS_HOST and REDIS_PORT if available,
+        otherwise defaults to 'redis:6379' for Docker Compose deployment.
         """
         if self.redis_client is None:
             try:
                 import redis
+                import os
+                
+                redis_host = os.environ.get('REDIS_HOST', 'redis')
+                redis_port = int(os.environ.get('REDIS_PORT', '6379'))
+                
                 self.redis_client = redis.Redis(
-                    host='redis',
-                    port=6379,
+                    host=redis_host,
+                    port=redis_port,
                     decode_responses=True
                 )
                 # Test connection
                 self.redis_client.ping()
-                print("✓ Connected to Redis")
+                print(f"✓ Connected to Redis at {redis_host}:{redis_port}")
             except Exception as e:
                 print(f"⚠ Redis not available: {e}. Continuing without caching.")
                 self.redis_client = False  # Mark as unavailable
@@ -171,8 +178,10 @@ class ScoringService:
                 normalized = normalize_minmax(values)
             else:  # zscore
                 normalized = normalize_zscore(values, clip_threshold=outlier_threshold)
-                # Convert z-scores to [0, 1] range for consistency
-                # Map [-3, 3] -> [0, 1]
+                # Convert z-scores to [0, 1] range for consistency with min-max
+                # Z-scores are in range [-outlier_threshold, +outlier_threshold] after clipping
+                # Map [-3, 3] → [0, 1] by: (z + 3) / 6
+                # This allows mixing z-score and min-max normalized features in scoring
                 normalized = (normalized + outlier_threshold) / (2 * outlier_threshold)
                 normalized = np.clip(normalized, 0, 1)
             
