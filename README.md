@@ -45,7 +45,7 @@ The sector dashboard features a color-coded heatmap visualization with aggregate
 
 ## 📋 Table of Contents
 
-- [Screenshots](#screenshots)
+- [Screenshots](#-screenshots)
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage Examples](#usage-examples)
