@@ -26,8 +26,26 @@ A comprehensive stock data ingestion, normalization, and analysis platform with 
 - **CI/CD Ready**: GitHub Actions workflows for testing and deployment
 - **Development Tools**: Hot reload, linting, and automated testing
 
+## 📸 Screenshots
+
+### Homepage
+The homepage displays stock cards with real-time prices, daily changes, and key financial metrics at a glance.
+
+![Screenshot of the StockLighthouse homepage showing a grid of stock cards displaying company symbols, current prices, daily percentage changes, and key financial metrics like P/E ratio and market cap](https://github.com/user-attachments/assets/61ae1fb2-5ad2-4e3a-8afa-2b3c0ff9bc09)
+
+### Stock Detail Page
+The stock detail page provides comprehensive KPIs, interactive price history charts, and P/E distribution analysis within the sector.
+
+![Screenshot of the stock detail page showing a KPI table on the left with financial metrics, an interactive 30-day price history chart in the center, and a P/E ratio distribution chart comparing the stock to its sector peers](https://github.com/user-attachments/assets/22632aef-9d81-46fc-bcf9-05aa80e99610)
+
+### Sector Dashboard
+The sector dashboard features a color-coded heatmap visualization with aggregated performance metrics and top-performing stocks by sector.
+
+![Screenshot of the sector dashboard displaying a color-coded heatmap where each tile represents a sector with its average daily change, along with summary statistics and top-performing stocks within each sector](https://github.com/user-attachments/assets/160bda4b-f537-4636-8e4f-362e14f140a2)
+
 ## 📋 Table of Contents
 
+- [Screenshots](#screenshots)
 - [Quick Start](#quick-start)
 - [Installation](#installation)
 - [Usage Examples](#usage-examples)
