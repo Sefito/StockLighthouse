@@ -47,10 +47,10 @@ jobs:
         working-directory: ./backend
         run: |
           mkdir -p test_artifacts
-          pytest -q -v tests/ --junitxml=test_artifacts/junit.xml || exit_code=$?
-          echo "${exit_code:-0}" > test_artifacts/exit_code.txt
+          pytest -q -v tests/ --junitxml=test_artifacts/junit.xml
 
       - name: Upload backend test artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: backend-test-artifacts
@@ -67,10 +67,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node 18
+      - name: Setup Python 3.10
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
+
+      - name: Cache pip
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: "pip-cache-${{ runner.os }}-${{ hashFiles('backend/requirements.txt') }}"
+          restore-keys: |
+            pip-cache-${{ runner.os }}-
 
       - name: Cache npm
         uses: actions/cache@v4
@@ -79,6 +92,17 @@ jobs:
           key: "npm-cache-${{ runner.os }}-${{ hashFiles('frontend/package-lock.json', 'frontend/package.json') }}"
           restore-keys: |
             npm-cache-${{ runner.os }}-
+
+      - name: Install Python dependencies (backend)
+        working-directory: ./backend
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then
+            pip install -r requirements.txt
+          else
+            echo "ERROR: backend/requirements.txt not found"
+            exit 1
+          fi
 
       - name: Install frontend dependencies
         working-directory: ./frontend
@@ -94,20 +118,90 @@ jobs:
         run: |
           npx playwright install --with-deps
 
+      - name: Start backend server
+        working-directory: ./backend
+        env:
+          PYTHONPATH: ./src
+        run: |
+          uvicorn stocklighthouse.api.main:app --host 0.0.0.0 --port 8000 > backend.log 2>&1 &
+          echo $! > backend.pid
+          # Wait for backend to be ready (60 seconds max: 30 retries * 2 seconds)
+          BACKEND_READY=false
+          for i in {1..30}; do
+            if curl -s --fail http://localhost:8000/ > /dev/null 2>&1; then
+              echo "Backend is ready"
+              BACKEND_READY=true
+              break
+            fi
+            echo "Waiting for backend... ($i/30)"
+            sleep 2
+          done
+          if [ "$BACKEND_READY" = false ]; then
+            echo "ERROR: Backend failed to start within 60 seconds"
+            if [ -f backend.log ]; then
+              echo "Backend log:"
+              cat backend.log
+            fi
+            exit 1
+          fi
+
+      - name: Start frontend dev server
+        working-directory: ./frontend
+        run: |
+          npm run dev > frontend.log 2>&1 &
+          echo $! > frontend.pid
+          # Wait for frontend to be ready (60 seconds max: 30 retries * 2 seconds)
+          FRONTEND_READY=false
+          for i in {1..30}; do
+            if curl -s --fail http://localhost:5173 > /dev/null 2>&1; then
+              echo "Frontend is ready"
+              FRONTEND_READY=true
+              break
+            fi
+            echo "Waiting for frontend... ($i/30)"
+            sleep 2
+          done
+          if [ "$FRONTEND_READY" = false ]; then
+            echo "ERROR: Frontend failed to start within 60 seconds"
+            if [ -f frontend.log ]; then
+              echo "Frontend log:"
+              tail -100 frontend.log
+            fi
+            exit 1
+          fi
+
       - name: Run frontend E2E tests (Playwright)
         working-directory: ./frontend
         env:
           PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 'false'
         run: |
           mkdir -p .test-results
-          npm run e2e || exit_code=$?
-          echo "${exit_code:-0}" > .test-results/exit_code.txt
+          npm run e2e
+
+      - name: Stop services
+        if: always()
+        working-directory: ./backend
+        run: |
+          # Stop backend (|| true prevents job failure if process already exited)
+          if [ -f backend.pid ]; then
+            kill $(cat backend.pid) || true
+            rm backend.pid
+          fi
+          # Stop frontend (|| true prevents job failure if process already exited)
+          if [ -f ../frontend/frontend.pid ]; then
+            kill $(cat ../frontend/frontend.pid) || true
+            rm ../frontend/frontend.pid
+          fi
 
       - name: Upload frontend test artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: frontend-test-artifacts
-          path: frontend/.test-results/
+          path: |
+            frontend/.test-results/
+            backend/backend.log
+            frontend/frontend.log
 
   frontend-lint:
     name: Frontend lint
@@ -117,10 +211,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node 18
+      - name: Setup Node 20
         uses: actions/setup-node@v4
         with:
-          node-version: '18'
+          node-version: '20'
 
       - name: Install frontend dev dependencies
         working-directory: ./frontend
@@ -134,7 +228,7 @@ jobs:
       - name: Run ESLint
         working-directory: ./frontend
         run: |
-          npm run lint || true
+          npm run lint
 
 # Notes:
 # - Installs backend deps from backend/requirements.txt and sets PYTHONPATH to backend/src so tests can import 'stocklighthouse'.
